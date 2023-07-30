@@ -128,7 +128,7 @@ void OldManSpeaking()
 				GameState = GSCreditsInit;
 		}
 		pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
-		//SDL_BlitSurface(Background,NULL,Screen,NULL);
+
 		CFairy_Draw(Fairy);
 		TextDelay++;
 		if (TextDelay == 2)
@@ -137,8 +137,10 @@ void OldManSpeaking()
 				NrOfChars++;
 			TextDelay = 0;
 		}
+		pd->graphics->pushContext(NULL);
+		pd->graphics->setFont(NULL);
 		pd->graphics->drawText(List[PageNr], NrOfChars, kASCIIEncoding, 50, 50);
-		//WriteText(Screen,font,List[PageNr],NrOfChars,50,50,5,Color1);
+		pd->graphics->popContext();
 	}
 	
 	if(GameState != GSOldManSpeaking)
