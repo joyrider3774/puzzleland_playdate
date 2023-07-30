@@ -72,17 +72,27 @@ void Options()
 	pd->graphics->setBackgroundColor(kColorWhite);
 	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+	
+
+	pd->graphics->pushContext(NULL);
+	pd->graphics->setFont(Mini2X);
+
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
+
+	int textw = pd->graphics->getTextWidth(Mini2X, "OPTIONS", strlen("OPTIONS"), kASCIIEncoding, 0);
+	pd->graphics->drawText("OPTIONS", strlen("OPTIONS"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - (textw >> 1), 30, 0);
+	
 	if (isSoundOn())
-		pd->graphics->drawText("SOUND: ON", strlen("SOUND: ON"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 35, 40);
+		pd->graphics->drawText("SOUND: ON", strlen("SOUND: ON"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 55, 70);
 	else
-		pd->graphics->drawText("SOUND: OFF", strlen("SOUND: OFF"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 35, 40);
+		pd->graphics->drawText("SOUND: OFF", strlen("SOUND: OFF"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 55, 70);
 	
 	if (isMusicOn())
-		pd->graphics->drawText("MUSIC: ON", strlen("MUSIC: ON"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 35, 60);
+		pd->graphics->drawText("MUSIC: ON", strlen("MUSIC: ON"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 55, 100);
 	else
-		pd->graphics->drawText("MUSIC: OFF", strlen("MUSIC: OFF"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 35, 60);
+		pd->graphics->drawText("MUSIC: OFF", strlen("MUSIC: OFF"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 55, 100);
 	
+	pd->graphics->popContext();
 
 	COptionsSelector_Draw(Selector);
 

@@ -15,27 +15,20 @@ COptionsSelector* COptionsSelector_Create()
 
 void COptionsSelector_Draw(COptionsSelector* Selector)
 {
-	//SDL_Rect aDstRect;
-	int y = 0;
-	int h = 0;
-	pd->graphics->getBitmapData(Selector->Image, NULL, &h, NULL, NULL, NULL);
+	int y;
 	switch(Selector->Selection)
 	{
 		case 1 :
-			y = 40- (h >> 2);
+			y = 65;
 			break;
 		case 2 :
-			y = 60- (h >> 2);
+			y = 95;
 			break;
 		case 3 :
-			y = 80- (h >> 2);
+			y = 125;
 			break;
 	}
-	/*aDstRect.x = 100;
-	aDstRect.w = Selector->Image->w;
-	aDstRect.h = Selector->Image->h;
-	SDL_BlitSurface(Selector->Image,NULL,Screen,&aDstRect);*/
-	pd->graphics->drawBitmap(Selector->Image, 100, y, kBitmapUnflipped);
+	pd->graphics->drawBitmap(Selector->Image, 75, y, kBitmapUnflipped);
 }
 
 int COptionsSelector_GetSelection(COptionsSelector* Selector)
