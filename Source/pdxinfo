@@ -1,0 +1,7 @@
+name=Puzzle Land
+author=Willems Davy aka Joyrider3774
+description=A remake of the Daedalian Opus Gameboy game.
+bundleID=com.joyrider3774.puzzleland
+version=1.0
+imagePath=metadata
+buildNumber=1
