@@ -135,6 +135,10 @@ void NextStageLevel1to35()
 				Player->State = EnterBuilding;
 		}
 		//SDL_BlitSurface(Background,NULL,Screen,NULL);
+		pd->graphics->clear(kColorBlack);
+		pd->graphics->setBackgroundColor(kColorBlack);
+		pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
 		pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 		CCloud_Move(Cloud1);
 		CCloud_Draw(Cloud1);
@@ -325,7 +329,9 @@ void NextStageLevel0()
 		if (CPlayer_GetX(Player) > 265)
 			Player->State = EnterBuilding;
 	}
-
+	pd->graphics->clear(kColorBlack);
+	pd->graphics->setBackgroundColor(kColorBlack);
+	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 	//SDL_BlitSurface(Background,NULL,Screen,NULL);
 	/*SDL_Rect aDstRect;

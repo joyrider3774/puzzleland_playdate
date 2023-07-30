@@ -68,6 +68,10 @@ void Options()
 		strcpy(Msg,"MUSIC: OFF");
 	WriteText(Screen,font,Msg,strlen(Msg),Screen->w / 2 -35,60,0,Color1);*/
 
+	pd->graphics->clear(kColorWhite);
+	pd->graphics->setBackgroundColor(kColorWhite);
+	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 	if (isSoundOn())
 		pd->graphics->drawText("SOUND: ON", strlen("SOUND: ON"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 35, 40);

@@ -97,6 +97,10 @@ void OldManSpeaking()
 
 	if (GameState == GSOldManSpeaking)
 	{
+		pd->graphics->clear(kColorWhite);
+		pd->graphics->setBackgroundColor(kColorWhite);
+		pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
 		if ((currButtons & kButtonA) && !(prevButtons & kButtonA))
 		{
 			if (PageNr < Lines)

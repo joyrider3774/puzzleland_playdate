@@ -64,6 +64,10 @@ void StageSelect()
 	SDL_BlitSurface(Text,NULL,Screen,&aDstRect);
 	pd->graphics->freeBitmap(Text);*/
 
+	pd->graphics->clear(kColorWhite);
+	pd->graphics->setBackgroundColor(kColorWhite);
+	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 	int textw = pd->graphics->getTextWidth(Mini, "ROOM SELECT", strlen("ROOM SELECT"), kASCIIEncoding, 0);
 	pd->graphics->drawText("ROOM SELECT", strlen("ROOM SELECT"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - (textw >> 1), 20);

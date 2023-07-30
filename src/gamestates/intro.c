@@ -99,6 +99,11 @@ void Intro()
 		pd->graphics->pushContext(Pict5);
 		pd->graphics->fillRect((int)160 - Pictx / 2, (int)120 - Picty / 2, Pictx, Picty, kColorClear);
 		pd->graphics->popContext();
+
+		pd->graphics->clear(kColorWhite);
+		pd->graphics->setBackgroundColor(kColorWhite);
+		pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+		
 		pd->graphics->drawBitmap(Pict5, 0, 0, kBitmapUnflipped);
 	}
 

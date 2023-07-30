@@ -43,6 +43,11 @@ void StageClear()
 	aDstRect.h = StageClearKader->h;
 	SDL_BlitSurface(RoomBackground,NULL,Screen,NULL);
 	*/
+
+	pd->graphics->clear(kColorBlack);
+	pd->graphics->setBackgroundColor(kColorBlack);
+	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
 	pd->graphics->drawBitmap(RoomBackground, 0, 0, kBitmapUnflipped);
 	DrawPanel();
 	DrawPlayField();

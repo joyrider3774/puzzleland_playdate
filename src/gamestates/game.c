@@ -425,6 +425,10 @@ void Game()
 		GameState -= GSInitDiff;
 	}
 
+	pd->graphics->clear(kColorBlack);
+	pd->graphics->setBackgroundColor(kColorBlack);
+	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+
 				/*case SDLK_ESCAPE :
 					GameState = GSTitleScreenInit;
 					Mix_HaltMusic();

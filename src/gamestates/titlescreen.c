@@ -54,6 +54,9 @@ void TitleScreen()
 		}
 	}
 	//SDL_BlitSurface(Background,NULL,Screen,NULL);
+	pd->graphics->clear(kColorWhite);
+	pd->graphics->setBackgroundColor(kColorWhite);
+	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 	
 	CTitleScreenSelector_Draw(TitleScreenSelector);
