@@ -74,27 +74,6 @@ void NextStageLevel1to35Init()
   			break;
   		default: Fairy->Hidden = true;
 	}
-	
-	/*SDL_Color Color1 = {25, 50, 50, 0};
-	SDL_Color Color2 = {0, 0, 0, 0};
-	Text = TTF_RenderText_Solid(font,LevelPasswords[Level],Color1);
-	TextDstRect.x = 160 - Text->w / 2;
-	TextDstRect.y = 25;
-	TextDstRect.w = Text->w;
-	TextDstRect.h = Text->h;
-	char ChrLevel[5];
-	sprintf(ChrLevel,"%02d",Level+1);
-	NextLevel = TTF_RenderText_Solid(font,ChrLevel,Color2);
-	NextLevelDstRect.x = 270;
-	NextLevelDstRect.y = 102;
-	NextLevelDstRect.w = NextLevel->w;
-	NextLevelDstRect.h = NextLevel->h;
-	sprintf(ChrLevel,"%02d",Level);
-	PrevLevel = TTF_RenderText_Solid(font,ChrLevel,Color2);
-	PrevLevelDstRect.x = 31;
-	PrevLevelDstRect.y = 102;
-	PrevLevelDstRect.w = PrevLevel->w;
-	PrevLevelDstRect.h = PrevLevel->h;*/
 }
 
 void NextStageLevel1to35DeInit()
@@ -134,7 +113,7 @@ void NextStageLevel1to35()
 			if(CPlayer_GetX(Player) < 32)
 				Player->State = EnterBuilding;
 		}
-		//SDL_BlitSurface(Background,NULL,Screen,NULL);
+
 		pd->graphics->clear(kColorBlack);
 		pd->graphics->setBackgroundColor(kColorBlack);
 		pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -161,44 +140,7 @@ void NextStageLevel1to35()
 			}
 			else
 			{
-				/*
-				Text = TTF_RenderText_Solid(font, LevelPasswords[Level], Color1);
-				TextDstRect.x = 160 - Text->w / 2;
-				TextDstRect.y = 25;
-				TextDstRect.w = Text->w;
-				TextDstRect.h = Text->h;
-				char ChrLevel[5];
-				sprintf(ChrLevel, "%02d", Level + 1);
-				NextLevel = TTF_RenderText_Solid(font, ChrLevel, Color2);
-				NextLevelDstRect.x = 270;
-				NextLevelDstRect.y = 102;
-				NextLevelDstRect.w = NextLevel->w;
-				NextLevelDstRect.h = NextLevel->h;
-				sprintf(ChrLevel, "%02d", Level);
-				PrevLevel = TTF_RenderText_Solid(font, ChrLevel, Color2);
-				PrevLevelDstRect.x = 31;
-				PrevLevelDstRect.y = 102;
-				PrevLevelDstRect.w = PrevLevel->w;
-				PrevLevelDstRect.h = PrevLevel->h;*/
-
-					/*BridgeSrcRect.x = 0;
-					BridgeSrcRect.y = 0;
-					BridgeSrcRect.w = BridgeDrawnWidth;
-					BridgeSrcRect.h = Bridge->h;
-					BridgeDstRect.x = 111;
-					BridgeDstRect.y = 188;
-					BridgeDstRect.w = BridgeDrawnWidth;
-					BridgeDstRect.h = Bridge->h;
-					BridgeDrawnWidth = BridgeDrawnWidth + 5;
-					if (BridgeDrawnWidth >= Bridge->w)
-					{
-						BridgeDrawing = false;
-						BridgeShown = true;
-						BridgeSrcRect.w = Bridge->w;
-						BridgeDstRect.w = Bridge->w;
-					}
-					SDL_BlitSurface(Bridge,&BridgeSrcRect,Screen,&BridgeDstRect);*/
-					int srcx, srcy, dstx, dsty, srcw, srch, bridgew, bridgeh;
+			    int srcx, srcy, dstx, dsty, srcw, srch, bridgew, bridgeh;
 				pd->graphics->getBitmapData(Bridge, &bridgew, &bridgeh, NULL, NULL, NULL);
 				srcx = 0;
 				srcy = 0;
@@ -267,20 +209,19 @@ void NextStageLevel1to35()
 			pd->graphics->drawText(LevelPasswords[Level], strlen(LevelPasswords[Level]), kASCIIEncoding, (WINDOW_WIDTH >> 1) - (textw >> 1), 34);
 			pd->graphics->popContext();
 		}
-			//SDL_BlitSurface(Text,NULL,Screen,&TextDstRect);
 		CSpaceShip_Draw(SpaceShip);
 		
+		pd->graphics->pushContext(NULL);
+		pd->graphics->setFont(NULL);
 		char* ChrLevel;
 		pd->system->formatString(&ChrLevel, "%02d", Level + 1);
-		pd->graphics->drawText(ChrLevel, strlen(ChrLevel), kASCIIEncoding, 270, 102);
+		pd->graphics->drawText(ChrLevel, strlen(ChrLevel), kASCIIEncoding, 270, 110);
 		pd->system->realloc(ChrLevel, 0);
 
 		pd->system->formatString(&ChrLevel, "%02d", Level);
-		pd->graphics->drawText(ChrLevel, strlen(ChrLevel), kASCIIEncoding, 31, 102);
+		pd->graphics->drawText(ChrLevel, strlen(ChrLevel), kASCIIEncoding, 31, 110);
 		pd->system->realloc(ChrLevel, 0);
-
-		//SDL_BlitSurface(PrevLevel,NULL,Screen,&PrevLevelDstRect);
-		//SDL_BlitSurface(NextLevel,NULL,Screen,&NextLevelDstRect);
+		pd->graphics->popContext();
 		
 		if (Player->State == EnteredBuilding)
 		{
@@ -303,15 +244,10 @@ void NextStageLevel0Init()
 	Cloud4 = CCloud_Create(50,50,-0.25,Small);
 	Background = loadImageAtPath("graphics/betweenstagelevel1");
 	SelectMusic(musStage);
-	//char ChrLevel[5];
-	//sprintf(ChrLevel,"%02d",Level+1);
-	//SDL_Color Color1 = {0,0,0,0};
-	//Text = TTF_RenderText_Solid(font,ChrLevel,Color1);
 }
 
 void NextStageLevel0DeInit()
 {
-//	Mix_HaltMusic();
 	pd->graphics->freeBitmap(Text);
 	pd->graphics->freeBitmap(Background);
 	CPlayer_Destroy(Player);
@@ -339,19 +275,14 @@ void NextStageLevel0()
 	pd->graphics->setBackgroundColor(kColorBlack);
 	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
-	//SDL_BlitSurface(Background,NULL,Screen,NULL);
-	/*SDL_Rect aDstRect;
-	aDstRect.x = 270;
-	aDstRect.y = 105;
-	aDstRect.w = Text->w;
-	aDstRect.h = Text->h;
-	SDL_BlitSurface(Text,NULL,Screen,&aDstRect);
-	*/
-	
+
+	pd->graphics->pushContext(NULL);
+	pd->graphics->setFont(NULL);
 	char* ChrLevel;
 	pd->system->formatString(&ChrLevel, "%02d", Level + 1);
-	pd->graphics->drawText(ChrLevel, strlen(ChrLevel), kASCIIEncoding, 270, 102);
+	pd->graphics->drawText(ChrLevel, strlen(ChrLevel), kASCIIEncoding, 270, 110);
 	pd->system->realloc(ChrLevel, 0);
+	pd->graphics->popContext();
 
 
 	CCloud_Move(Cloud1);
