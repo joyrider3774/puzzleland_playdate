@@ -1,7 +1,7 @@
 #ifndef CCLOUD_H
 #define CCLOUD_H
 
-#include <SDL.h>
+#include <pd_api.h>
 
 typedef enum {Big,Small} CloudStyles;
 
@@ -10,7 +10,7 @@ struct CCloud
 {
  	float X,Xi;
  	int Y,Width,Height;
- 	SDL_Surface* Image;
+ 	LCDBitmap* Image;
 } ;
 
 void CCloud_Destroy(CCloud* Cloud);

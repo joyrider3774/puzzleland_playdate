@@ -1,12 +1,12 @@
 #ifndef COPTIONSSELECTOR_H
 #define COPTIONSSELECTOR_H
 
-#include <SDL.h>
+#include <pd_api.h>
 
 typedef struct COptionsSelector COptionsSelector;
 struct COptionsSelector
 {
- 	SDL_Surface* Image;
+ 	LCDBitmap* Image;
  	int Selection;
 };
 

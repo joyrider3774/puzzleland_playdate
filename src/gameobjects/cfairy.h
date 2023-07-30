@@ -1,7 +1,7 @@
 #ifndef CFAIRY_H
 #define CFAIRY_H
 
-#include <SDL.h>
+#include <pd_api.h>
 #include <stdbool.h>
 
 typedef struct CFairy CFairy;
@@ -9,7 +9,7 @@ struct CFairy
 {
   	bool Hidden;
  	int X,Y,Width,Height,Delay,AnimPhase,AnimDelay;
- 	SDL_Surface* Image;
+ 	LCDBitmap* Image;
 } ;
 
 void CFairy_Destroy(CFairy* Fairy);

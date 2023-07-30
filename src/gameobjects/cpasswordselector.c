@@ -1,14 +1,14 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
+#include <pd_api.h>
+#include "../pd_helperfuncs.h"
 #include "../commonvars.h"
+#include "../sound.h"
 #include "cpasswordselector.h"
 
 
 CPasswordSelector* CPasswordSelector_Create()
 {
-	CPasswordSelector* Result = (CPasswordSelector *) malloc(sizeof(CPasswordSelector));
-	Result->Image = IMG_Load("./graphics/select.png");
+	CPasswordSelector* Result = pd->system->realloc(NULL, sizeof(CPasswordSelector));
+	Result->Image = loadImageAtPath("graphics/select");
 	Result->X = 0;
 	Result->Y = 0;
 	return Result;
@@ -16,12 +16,15 @@ CPasswordSelector* CPasswordSelector_Create()
 
 void CPasswordSelector_Draw(CPasswordSelector* Selector)
 {
-	SDL_Rect aDstRect;
+	/*SDL_Rect aDstRect;
 	aDstRect.x = XOffsetPassword + Selector->X * 35;
 	aDstRect.y = YOffsetPassword + Selector->Y * 35 - (Selector->Image->h >> 2);
 	aDstRect.w = Selector->Image->w;
 	aDstRect.h = Selector->Image->h;
-	SDL_BlitSurface(Selector->Image,NULL,Screen,&aDstRect);
+	SDL_BlitSurface(Selector->Image,NULL,Screen,&aDstRect);*/
+	int h;
+	pd->graphics->getBitmapData(Selector->Image, NULL, &h, NULL, NULL, NULL);
+	pd->graphics->drawBitmap(Selector->Image, XOffsetPassword + Selector->X * 35, YOffsetPassword + Selector->Y * 35 - (h >> 2), kBitmapUnflipped);
 }
 
 void CPasswordSelector_MoveDown(CPasswordSelector* Selector)
@@ -29,15 +32,13 @@ void CPasswordSelector_MoveDown(CPasswordSelector* Selector)
 	if (Selector->Y < LetterRows - 2)
 	{
 		Selector->Y = Selector->Y + 1;
-		if (GlobalSoundEnabled && SoundEnabled)
-			Mix_PlayChannel(-1,Sounds[SND_Menu],0);
+		playMenuSound();
 	}
 	else
 		if ((Selector->Y == LetterRows -2) && (Selector->X < LetterCols -2))
 		{
 			Selector->Y = Selector->Y + 1;
-			if (GlobalSoundEnabled && SoundEnabled)
-				Mix_PlayChannel(-1,Sounds[SND_Menu],0);
+			playMenuSound();
 		}
 }
 
@@ -46,8 +47,7 @@ void CPasswordSelector_MoveLeft(CPasswordSelector* Selector)
 	if (Selector->X > 0)
 	{
 		Selector->X = Selector->X -1;
-		if (GlobalSoundEnabled && SoundEnabled)
-			Mix_PlayChannel(-1,Sounds[SND_Menu],0);
+		playMenuSound();
 	}
 }
 
@@ -57,16 +57,14 @@ void CPasswordSelector_MoveRight(CPasswordSelector* Selector)
 		if (Selector->X < LetterCols -1)
 		{
 			Selector->X = Selector->X + 1;
-			if (GlobalSoundEnabled && SoundEnabled)
-				Mix_PlayChannel(-1,Sounds[SND_Menu],0);
+			playMenuSound();
 		}
 
 	if (Selector->Y == LetterRows - 1)
 		if (Selector->X < LetterCols -3)
 		{
 			Selector->X = Selector->X + 1;
-			if (GlobalSoundEnabled && SoundEnabled)
-				Mix_PlayChannel(-1,Sounds[SND_Menu],0);
+			playMenuSound();
 		}
 }
 
@@ -75,8 +73,7 @@ void CPasswordSelector_MoveUp(CPasswordSelector* Selector)
 	if (Selector->Y > 0)
 	{
 		Selector->Y = Selector->Y - 1;
-		if (GlobalSoundEnabled && SoundEnabled)
-			Mix_PlayChannel(-1,Sounds[SND_Menu],0);
+		playMenuSound();
 	}
 }
 
@@ -92,6 +89,6 @@ int CPasswordSelector_GetY(CPasswordSelector* Selector)
 
 void CPasswordSelector_Destroy(CPasswordSelector* Selector)
 {
-	SDL_FreeSurface(Selector->Image);
-	free(Selector);
+	pd->graphics->freeBitmap(Selector->Image);
+	pd->system->realloc(Selector, 0);
 }

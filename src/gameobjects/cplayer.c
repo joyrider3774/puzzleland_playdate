@@ -1,5 +1,5 @@
-#include <SDL.h>
-#include <SDL_image.h>
+#include <pd_api.h>
+#include "../pd_helperfuncs.h"
 #include "../commonvars.h"
 #include "cplayer.h"
 
@@ -11,9 +11,9 @@ const int AnimEnterBuilding[4]  = {15,16,17,18};
 
 CPlayer* CPlayer_Create(const int Xin,const int Yin,const int MinXin, const int MaxXin)
 {
-	CPlayer* Result = (CPlayer *) malloc(sizeof(CPlayer));
- 	Result->Image = IMG_Load("./graphics/ryf-player.png");
- 	Result->Shadow = IMG_Load("./graphics/ryf-shadow.png");
+	CPlayer* Result = pd->system->realloc(NULL, sizeof(CPlayer));
+ 	Result->Image = loadImageAtPath("graphics/ryf-player");
+ 	Result->Shadow = loadImageAtPath("graphics/ryf-shadow");
  	Result->Y = Yin;
 	Result->X = Xin;
  	Result->Width = 23;
@@ -29,14 +29,16 @@ CPlayer* CPlayer_Create(const int Xin,const int Yin,const int MinXin, const int 
 
 void CPlayer_Draw(CPlayer* Player)
 {
-	SDL_Rect DstRect,SrcRect;
+	/*SDL_Rect DstRect,SrcRect;
 	DstRect.x = Player->X + 1;
  	DstRect.y = Player->Y + 26;
  	DstRect.w = Player->Shadow->w;
  	DstRect.h = Player->Shadow->h;
- 	SDL_BlitSurface(Player->Shadow,NULL,Screen,&DstRect);
+ 	SDL_BlitSurface(Player->Shadow,NULL,Screen,&DstRect);*/
 
- 	DstRect.x = Player->X;
+	pd->graphics->drawBitmap(Player->Shadow, Player->X + 1, Player->Y + 26, kBitmapUnflipped);
+
+ 	/*DstRect.x = Player->X;
  	DstRect.y = Player->Y;
  	DstRect.w = Player->Width;
  	DstRect.h = Player->Height;
@@ -44,7 +46,8 @@ void CPlayer_Draw(CPlayer* Player)
  	SrcRect.y = 0;
  	SrcRect.w = Player->Width;
  	SrcRect.h = Player->Height;
-	SDL_BlitSurface(Player->Image,&SrcRect,Screen,&DstRect);
+	SDL_BlitSurface(Player->Image,&SrcRect,Screen,&DstRect);*/
+	DrawBitmapSrcRec(Player->Image, Player->X, Player->Y, Player->AnimPhase * Player->Width, 0, Player->Width, Player->Height, kBitmapUnflipped);
 }
 
 int CPlayer_GetX(CPlayer* Player)
@@ -64,9 +67,9 @@ int CPlayer_GetWidth(CPlayer* Player)
 
 void CPlayer_Destroy(CPlayer* Player)
 {
- 	SDL_FreeSurface(Player->Shadow);
- 	SDL_FreeSurface(Player->Image);
-	free(Player);
+ 	pd->graphics->freeBitmap(Player->Shadow);
+ 	pd->graphics->freeBitmap(Player->Image);
+	pd->system->realloc(Player, 0);
 }
 
 void CPlayer_Move(CPlayer* Player)
@@ -74,12 +77,11 @@ void CPlayer_Move(CPlayer* Player)
 
 	if ((Player->State == Walking) || (Player->State==Waiting))
 	{
-		Uint8* keyState = SDL_GetKeyState(NULL);
-   		if(keyState[SDLK_LEFT])
+		if (currButtons & kButtonLeft)
 		{
-			if(Player->X - 3 >= Player->MinX)
+			if(Player->X - 2 >= Player->MinX)
 			{
-				Player->X = Player->X -3;
+				Player->X = Player->X -2;
 				Player->AnimPhase = AnimLeft[Player->AnimCounter];
 				Player->State = Walking;
 			}
@@ -87,11 +89,11 @@ void CPlayer_Move(CPlayer* Player)
 				Player->State = Waiting;
 		}
  		else
-			if(keyState[SDLK_RIGHT])
+			if (currButtons & kButtonRight)
 			{
-				if(Player->X + 3 <= Player->MaxX)
+				if(Player->X + 2 <= Player->MaxX)
 				{
-					Player->X = Player->X +3;
+					Player->X = Player->X +2;
 					Player->AnimPhase = AnimRight[Player->AnimCounter];
 					Player->State = Walking;
 				}
@@ -103,18 +105,24 @@ void CPlayer_Move(CPlayer* Player)
 	}
 	if (Player->State == Walking)
 	{
-     	Player->AnimCounter++;
+		if (Player->Delay > 0)
+			Player->Delay--;
+		if (Player->Delay == 0)
+		{
+			Player->AnimCounter++;
+			Player->Delay = 3;
+		}
      	if (Player->AnimCounter > 5)
      		Player->AnimCounter = 0;
     }
   	if (Player->State == EnterBuilding)
   	{
-  		Player->Delay++;
-  		if(Player->Delay==3)
+  		Player->Delay--;
+  		if(Player->Delay==0)
   		{
   			Player->AnimCounter++;
   			Player->Y = Player->Y - 1;
-  			Player->Delay = 0;
+  			Player->Delay = 3;
   		}
   		if (Player->AnimCounter > 3)
   		{

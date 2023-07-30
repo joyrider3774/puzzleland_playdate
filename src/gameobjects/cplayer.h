@@ -1,6 +1,7 @@
 #ifndef CPLAYER_H
 #define CPLAYER_H
-#include <SDL.h>
+
+#include <pd_api.h>
 
 typedef enum {Walking,Waiting,LookingUp,EnterBuilding,EnteredBuilding} PlayerStates;
 
@@ -8,7 +9,7 @@ typedef struct CPlayer CPlayer;
 struct CPlayer
 {
  	PlayerStates State;
- 	SDL_Surface *Image,*Shadow;
+ 	LCDBitmap *Image,*Shadow;
  	int X,Y,AnimPhase,AnimCounter,Delay,Width,Height,MinX,MaxX;
 };
 

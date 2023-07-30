@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include <pd_api.h>
 #include <stdbool.h>
 #include "commonvars.h"
 #include "gameobjects/chand.h"
@@ -18,39 +18,44 @@ const char Letters[4][7] = {{'A','B','C','D','E','F','G'},
 							  {'H','I','J','K','L','M','N'},
 							  {'O','P','Q','R','S','T','U'},
 							  {'V','W','X','Y','Z','0','0'}};
+PlaydateAPI* pd;
+PDButtons currButtons, prevButtons;
+unsigned int prevLogTime = 0u;
+int showFps = ShowFpsDefault;
+int GameMoveCoolDown;
+
 //common stuff
-SDL_Surface* Screen;
-SDL_Event Event;
-SDL_Surface* Background = NULL;
-SDL_Surface* Text = NULL;
+LCDBitmap* Background = NULL;
+LCDBitmap* Text = NULL;
 CFairy* Fairy;
-TTF_Font* font;
+LCDFont* Nano, * Mini, * Mini2X;
 
 //Game Stuff
 int GameState = GSIntroInit;
 int Level;
 CHand* Hand;
-time_t StartTime,EndTime;
-Uint32 OldTime = 0;
-
-//Audio
-bool GlobalSoundEnabled = true;
-bool SoundEnabled=true,MusicEnabled=true;
-Mix_Chunk* Sounds[NROFSOUNDS];
-Mix_Music* Music[NROFMUSIC];
+unsigned int StartTime,EndTime;
+uint32_t OldTime = 0;
 
 //Puzzle Game Stuff
-SDL_Surface *BlockImages[BlockCount];
-SDL_Surface *BorderImages[BorderCount];
+LCDBitmap* BlockImages[BlockCount];
+LCDBitmap* BorderImages[BorderCount];
 int PlayField[2][Cols][Rows];
 bool BlockActive;
 
 //stage Clear Stuff
-SDL_Surface *RoomBackground = NULL;
-SDL_Surface *StageClearKader = NULL;
+LCDBitmap* RoomBackground = NULL;
+LCDBitmap* StageClearKader = NULL;
 
 //Next Stage Stuff
-SDL_Surface *Bridge = NULL;
-SDL_Surface* PrevLevel = NULL;
-SDL_Surface* NextLevel = NULL;
+LCDBitmap* Bridge = NULL;
+LCDBitmap* PrevLevel = NULL;
+LCDBitmap* NextLevel = NULL;
+
+unsigned int FrameTime, Frames;
+float CurrentMs;
+
+void setPDPtr(PlaydateAPI* p) {
+	pd = p;
+}
 

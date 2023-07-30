@@ -1,15 +1,15 @@
 #ifndef CHAND_H
 #define CHAND_H
 
-#include <SDL.h>
+#include <pd_api.h>
 #include <stdbool.h>
 
 typedef struct CHand CHand;
 struct CHand
 {
- 	int X,Y;
+ 	int X,Y,MoveCoolDown;
  	bool Hidden;
- 	SDL_Surface *Image;
+ 	LCDBitmap* Image;
 };
 
 void CHand_Destroy(CHand* Hand);

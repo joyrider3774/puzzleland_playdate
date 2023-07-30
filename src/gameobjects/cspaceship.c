@@ -1,13 +1,13 @@
-#include <SDL.h>
-#include <SDL_image.h>
+#include <pd_api.h>
+#include "../pd_helperfuncs.h"
 #include "../commonvars.h"
 #include "cspaceship.h"
 
 
 CSpaceShip* CSpaceShip_Create()
 {
-	CSpaceShip* Result = (CSpaceShip *) malloc(sizeof(CSpaceShip));
-	Result->Image = IMG_Load("./graphics/spaceship.png");
+	CSpaceShip* Result = pd->system->realloc(NULL, sizeof(CSpaceShip));
+	Result->Image = loadImageAtPath("graphics/spaceship");
 	Result->X=-32;
 	Result->Y= 28;
 	return Result;
@@ -15,12 +15,13 @@ CSpaceShip* CSpaceShip_Create()
 
 void CSpaceShip_Draw(CSpaceShip* spaceShip)
 {
-	SDL_Rect aDstRect;
+	/*SDL_Rect aDstRect;
 	aDstRect.x = spaceShip->X;
 	aDstRect.y = spaceShip->Y;
 	aDstRect.w = spaceShip->Image->w;
 	aDstRect.h = spaceShip->Image->h;
-	SDL_BlitSurface(spaceShip->Image,NULL,Screen,&aDstRect);
+	SDL_BlitSurface(spaceShip->Image,NULL,Screen,&aDstRect);*/
+	pd->graphics->drawBitmap(spaceShip->Image, spaceShip->X, spaceShip->Y, kBitmapUnflipped);
 }
 
 void CSpaceShip_Move(CSpaceShip* spaceShip)
@@ -36,6 +37,6 @@ int CSpaceShip_GetX(CSpaceShip* spaceShip)
 
 void CSpaceShip_destroy(CSpaceShip* spaceShip)
 {
-	SDL_FreeSurface(spaceShip->Image);
-	free(spaceShip);
+	pd->graphics->freeBitmap(spaceShip->Image);
+	pd->system->realloc(spaceShip, 0);
 }

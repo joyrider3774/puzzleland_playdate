@@ -1,59 +1,73 @@
-#include <SDL.h>
-#include <SDL_image.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <pd_api.h>
+#include "../pd_helperfuncs.h"
 #include "../commonvars.h"
 #include "chand.h"
 
-
 CHand* CHand_Create()
 {
-	CHand* Result = (CHand *) malloc(sizeof(CHand));
-	Result->Image = IMG_Load("./graphics/hand.png");
+	CHand* Result = pd->system->realloc(NULL, sizeof(CHand));
+	Result->Image = loadImageAtPath("graphics/hand");
 	Result->Hidden = false;
 	Result->X = 0;
 	Result->Y = 0;
+	Result->MoveCoolDown = 0;
 	return Result;
 }
 
 void CHand_Draw(CHand* Hand)
 {
-	SDL_Rect aDstRect;
+	//SDL_Rect aDstRect;
 	if (!Hand->Hidden)
 	{
-		aDstRect.x = MinPlayAreaX + Hand->X * BlockWidth;
+		/*aDstRect.x = MinPlayAreaX + Hand->X * BlockWidth;
 		aDstRect.y = MinPlayAreaY + Hand->Y * BlockHeight;
 		aDstRect.w = Hand->Image->w;
 		aDstRect.h = Hand->Image->h;
-		SDL_BlitSurface(Hand->Image,NULL,Screen,&aDstRect);
+		SDL_BlitSurface(Hand->Image,NULL,Screen,&aDstRect);*/
+		pd->graphics->drawBitmap(Hand->Image, MinPlayAreaX + Hand->X * BlockWidth, MinPlayAreaY + Hand->Y * BlockHeight, kBitmapUnflipped);
 	}
 }
 
 void CHand_Move(CHand* Hand)
 {
-	if (!Hand->Hidden)
+	if (Hand->MoveCoolDown > 0)
+		Hand->MoveCoolDown--;
+	if ((!Hand->Hidden) && (Hand->MoveCoolDown == 0))
 	{
-		Uint8* keystate = SDL_GetKeyState(NULL);
-		if (keystate[SDLK_UP])
+		if (currButtons & kButtonUp)
 		{
 			if (Hand->Y - 1 >= 0)
+			{
 				Hand->Y = Hand->Y - 1;
+				Hand->MoveCoolDown = 3;
+			}
 		}
-		else if (keystate[SDLK_DOWN])
+		else if (currButtons & kButtonDown)
 		{
 			if (Hand->Y + 1 < Rows)
+			{
 				Hand->Y = Hand->Y + 1;
+				Hand->MoveCoolDown = 3;
+			}
 		}
 		
-		if (keystate[SDLK_LEFT])
+		if (currButtons & kButtonLeft)
 		{
 			if (Hand->X - 1 >= 0)
+			{
 				Hand->X = Hand->X - 1;
+				Hand->MoveCoolDown = 3;
+			}
 		}
-		else if (keystate[SDLK_RIGHT])
+		else if (currButtons & kButtonRight)
 		{
 			if (Hand->X + 1 < Cols)
+			{
 				Hand->X = Hand->X + 1;
+				Hand->MoveCoolDown = 3;
+			}
 		}
 	}
 }
@@ -86,6 +100,6 @@ void CHand_Show(CHand* Hand)
 
 void CHand_Destroy(CHand* Hand)
 {
-	SDL_FreeSurface(Hand->Image);
-	free(Hand);
+	pd->graphics->freeBitmap(Hand->Image);
+	pd->system->realloc(Hand, 0);
 }

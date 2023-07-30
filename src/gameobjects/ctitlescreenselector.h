@@ -1,13 +1,13 @@
 #ifndef CTITLESCREENSELECTOR_H
 #define CTITLESCREENSELECTOR_H
 
-#include <sdl.h>
+#include <pd_api.h>
 
 typedef struct CTitleScreenSelector CTitleScreenSelector;
 struct CTitleScreenSelector
 {
 	int X,Selection;
-	SDL_Surface *Image;
+	LCDBitmap *Image;
 };
 
 CTitleScreenSelector* CTitleScreenSelector_Create();

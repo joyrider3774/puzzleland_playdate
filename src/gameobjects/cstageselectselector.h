@@ -1,13 +1,13 @@
 #ifndef CSTAGESELECTSELECTOR_H
 #define CSTAGESELECTSELECTOR_H
 
-#include <SDL.h>
+#include <pd_api.h>
 
 typedef struct CStageSelectSelector CStageSelectSelector;
 struct CStageSelectSelector
 {
 	int X,Y;
- 	SDL_Surface* Image;
+ 	LCDBitmap* Image;
 };
 
 CStageSelectSelector* CStageSelectSelector_Create();

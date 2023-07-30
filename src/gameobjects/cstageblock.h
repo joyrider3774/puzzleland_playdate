@@ -1,7 +1,7 @@
 #ifndef CSTAGEBLOCK_H
 #define CSTAGEBLOCK_H
 
-#include <SDL.h>
+#include <pd_api.h>
 #include <stdbool.h>
 
 typedef struct CStageBlock CStageBlock;
@@ -9,7 +9,7 @@ struct CStageBlock
 {
  	bool Hidden;
  	int X,Y,Yi,Width,Height;
- 	SDL_Surface* Image;
+ 	LCDBitmap* Image;
 };
 
 void CStageBlock_destroy(CStageBlock* stageBlock);

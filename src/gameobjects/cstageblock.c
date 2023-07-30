@@ -1,39 +1,44 @@
-#include <SDL.h>
-#include <SDL_image.h>
+#include <stdio.h>
+#include <pd_api.h>
+#include "../pd_helperfuncs.h"
 #include "../commonvars.h"
 #include "cstageblock.h"
 
 
 CStageBlock* CStageBlock_Create()
 {
-	CStageBlock* Result = (CStageBlock *) malloc(sizeof(CStageBlock));
+	CStageBlock* Result = pd->system->realloc(NULL, sizeof(CStageBlock));
 	Result->Image=NULL;
  	return Result;
 }
 
 void CStageBlock_Load(CStageBlock* stageBlock, const int BlockNr)
 {
-	char ChrFileName[FILENAME_MAX];
-	sprintf(ChrFileName,"./graphics/stageblock%d.png",BlockNr);
-	stageBlock->Image = IMG_Load(ChrFileName);
+	char* ChrFileName;
+	pd->system->formatString(&ChrFileName, "./graphics/stageblock%d",BlockNr);
+	stageBlock->Image = loadImageAtPath(ChrFileName);
+	pd->system->realloc(ChrFileName, 0);
+	int w, h;
+	pd->graphics->getBitmapData(stageBlock->Image, &w, &h, NULL, NULL, NULL);
 	stageBlock->Hidden = false;
 	stageBlock->Yi = 3;
-	stageBlock->X = 160 - stageBlock->Image->w / 2;
-	stageBlock->Y = -stageBlock->Image->h;
-	stageBlock->Width = stageBlock->Image->w;
-	stageBlock->Height = stageBlock->Image->h;
+	stageBlock->X = 160 - w / 2;
+	stageBlock->Y = -h;
+	stageBlock->Width = w;
+	stageBlock->Height = h;
 }
 
 void CStageBlock_Draw(CStageBlock* stageBlock)
 {
-	SDL_Rect aDstRect;
+	//SDL_Rect aDstRect;
 	if (!stageBlock->Hidden)
 	{
-		aDstRect.x = stageBlock->X;
+		/*aDstRect.x = stageBlock->X;
 		aDstRect.y = stageBlock->Y;
 		aDstRect.w = stageBlock->Width;
 		aDstRect.h = stageBlock->Height;
-		SDL_BlitSurface(stageBlock->Image,NULL,Screen,&aDstRect);
+		SDL_BlitSurface(stageBlock->Image,NULL,Screen,&aDstRect);*/
+		pd->graphics->drawBitmap(stageBlock->Image, stageBlock->X, stageBlock->Y, kBitmapUnflipped);
 	}
 }
 
@@ -57,7 +62,7 @@ void CStageBlock_destroy(CStageBlock* stageBlock)
 {
 	if (stageBlock->Image != NULL)
 	{
-		SDL_FreeSurface(stageBlock->Image);
+		pd->graphics->freeBitmap(stageBlock->Image);
 	}
-	free(stageBlock);
+	pd->system->realloc(stageBlock, 0);
 }

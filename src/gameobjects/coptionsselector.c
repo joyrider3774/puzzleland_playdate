@@ -1,37 +1,41 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_mixer.h>
+#include <pd_api.h>
+#include "../pd_helperfuncs.h"
 #include "../commonvars.h"
+#include "../sound.h"
 #include "coptionsselector.h"
 
 
 COptionsSelector* COptionsSelector_Create()
 {
-	COptionsSelector* Result = (COptionsSelector *) malloc(sizeof(COptionsSelector));
-	Result->Image = IMG_Load("./graphics/optionsselect.png");
+	COptionsSelector* Result = pd->system->realloc(NULL, sizeof(COptionsSelector));
+	Result->Image = loadImageAtPath("graphics/optionsselect");
 	Result->Selection = 1;
 	return Result;
 }
 
 void COptionsSelector_Draw(COptionsSelector* Selector)
 {
-	SDL_Rect aDstRect;
+	//SDL_Rect aDstRect;
+	int y = 0;
+	int h = 0;
+	pd->graphics->getBitmapData(Selector->Image, NULL, &h, NULL, NULL, NULL);
 	switch(Selector->Selection)
 	{
 		case 1 :
-			aDstRect.y = 40- (Selector->Image->h >> 2);
+			y = 40- (h >> 2);
 			break;
 		case 2 :
-			aDstRect.y = 60- (Selector->Image->h >> 2);
+			y = 60- (h >> 2);
 			break;
 		case 3 :
-			aDstRect.y = 80- (Selector->Image->h >> 2);
+			y = 80- (h >> 2);
 			break;
 	}
-	aDstRect.x = 100;
+	/*aDstRect.x = 100;
 	aDstRect.w = Selector->Image->w;
 	aDstRect.h = Selector->Image->h;
-	SDL_BlitSurface(Selector->Image,NULL,Screen,&aDstRect);
+	SDL_BlitSurface(Selector->Image,NULL,Screen,&aDstRect);*/
+	pd->graphics->drawBitmap(Selector->Image, 100, y, kBitmapUnflipped);
 }
 
 int COptionsSelector_GetSelection(COptionsSelector* Selector)
@@ -44,8 +48,7 @@ void COptionsSelector_MoveDown(COptionsSelector* Selector)
 	if (Selector->Selection < 2)
 	{
 		Selector->Selection++;
-		if(GlobalSoundEnabled && SoundEnabled)
-			Mix_PlayChannel(-1,Sounds[SND_Menu],0);
+		playMenuSound();
 	}
 }
 
@@ -54,13 +57,12 @@ void COptionsSelector_MoveUp(COptionsSelector* Selector)
 	if (Selector->Selection > 1)
 	{
 		Selector->Selection--;
-		if(GlobalSoundEnabled && SoundEnabled)
-			Mix_PlayChannel(-1,Sounds[SND_Menu],0);
+		playMenuSound();
 	}
 }
 
 void COptionsSelector_Destroy(COptionsSelector* Selector)
 {
-	SDL_FreeSurface(Selector->Image);
-	free(Selector);
+	pd->graphics->freeBitmap(Selector->Image);
+	pd->system->realloc(Selector, 0);
 }

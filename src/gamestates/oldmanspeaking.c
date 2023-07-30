@@ -1,7 +1,7 @@
-#include <SDL.h>
-#include <SDL_mixer.h>
-#include <SDL_image.h>
+#include <pd_api.h>
 #include <stdbool.h>
+#include "../pd_helperfuncs.h"
+#include "../sound.h"
 #include "../gameobjects/cfairy.h"
 #include "../commonvars.h"
 #include "gamecommon.h"
@@ -23,7 +23,6 @@ void OldManSpeakingInit()
 {
 	Background = NULL;
 	Fairy = CFairy_Create(240,175,6);
-	SDL_PollEvent(&Event);
 	switch (Level)
 	{
 		case 0:
@@ -31,8 +30,7 @@ void OldManSpeakingInit()
 		case 12:
 		case 35:
 		case 36:
-			if (GlobalSoundEnabled && MusicEnabled)
-				Mix_PlayMusic(Music[MUS_Oldman],-1);
+			SelectMusic(musOldman);
 			TextDelay = 0;
 			NrOfChars = 0;
 			Lines = 0;
@@ -57,7 +55,7 @@ void OldManSpeakingInit()
 					break;
 				default: TekstNr = 0;
 			}
-			Background = IMG_Load("./graphics/oldman.png");
+			Background = loadImageAtPath("graphics/oldman");
 			for(Teller=0;Teller<strlen(Tekst[TekstNr]);Teller++)
 			{
 				if (Tekst[TekstNr][Teller] == '$')
@@ -83,14 +81,13 @@ void OldManSpeakingInit()
 void OldManSpeakingDeInit()
 {
 	if(Background)
-		SDL_FreeSurface(Background);
+		pd->graphics->freeBitmap(Background);
 	CFairy_Destroy(Fairy);
 }
 
 
 void OldManSpeaking()
 {
-	SDL_Color Color1 = {0,0,0,0};
 	if(GameState == GSOldManSpeakingInit)
 	{
 		OldManSpeakingInit();
@@ -100,40 +97,34 @@ void OldManSpeaking()
 
 	if (GameState == GSOldManSpeaking)
 	{
-		while(SDL_PollEvent(&Event))
+		if ((currButtons & kButtonA) && !(prevButtons & kButtonA))
 		{
-			if (Event.type == SDL_KEYDOWN)
+			if (PageNr < Lines)
 			{
-				switch (Event.key.keysym.sym)
-				{
-					case SDLK_x:
-						if (PageNr < Lines)
-						{
-							PageNr++;
-							NrOfChars = 0;
-						}
-						else
-							if (Level < 36)
-								GameState = GSNextStageInit;
-							else
-								GameState = GSCreditsInit;
-						break;
-					case SDLK_ESCAPE:
-						Mix_HaltMusic();
-						GameState = GSTitleScreenInit;
-						break;
-					case SDLK_c:
-						if (Level < 36)
-							GameState = GSNextStageInit;
-						else
-							GameState = GSCreditsInit;
-						break;
-					default:
-						break;
-				}
+				PageNr++;
+				NrOfChars = 0;
 			}
+			else
+				if (Level < 36)
+					GameState = GSNextStageInit;
+				else
+					GameState = GSCreditsInit;
 		}
-		SDL_BlitSurface(Background,NULL,Screen,NULL);
+			/*			case SDLK_ESCAPE:
+							Mix_HaltMusic();
+							GameState = GSTitleScreenInit;
+							break;
+			*/
+		
+		if ((currButtons & kButtonB) && !(prevButtons & kButtonB))
+		{
+			if (Level < 36)
+				GameState = GSNextStageInit;
+			else
+				GameState = GSCreditsInit;
+		}
+		pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
+		//SDL_BlitSurface(Background,NULL,Screen,NULL);
 		CFairy_Draw(Fairy);
 		TextDelay++;
 		if (TextDelay == 2)
@@ -142,7 +133,8 @@ void OldManSpeaking()
 				NrOfChars++;
 			TextDelay = 0;
 		}
-		WriteText(Screen,font,List[PageNr],NrOfChars,50,50,5,Color1);
+		pd->graphics->drawText(List[PageNr], NrOfChars, kASCIIEncoding, 50, 50);
+		//WriteText(Screen,font,List[PageNr],NrOfChars,50,50,5,Color1);
 	}
 	
 	if(GameState != GSOldManSpeaking)

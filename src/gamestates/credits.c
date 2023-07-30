@@ -1,6 +1,5 @@
-#include <SDL.h>
-#include <SDL_ttf.h>
-#include "SDL_image.h"
+#include "pd_api.h"
+#include "../pd_helperfuncs.h"
 #include "../commonvars.h"
 #include "gamecommon.h"
 #include "credits.h"
@@ -10,12 +9,12 @@ size_t CreditsNrOfChars;
 void CreditsInit()
 {
 	CreditsNrOfChars = 0;
-	Background = IMG_Load("./graphics/paper.png");
+	Background = loadImageAtPath("graphics/paper");
 }
 
 void CreditsDeInit()
 {
-	SDL_FreeSurface(Background);
+	pd->graphics->freeBitmap(Background);
 }
 
 void Credits()
@@ -28,26 +27,22 @@ void Credits()
 		GameState -= GSInitDiff;
 	}
 	
-	while (SDL_PollEvent(&Event))
-	{
-		if(Event.type == SDL_KEYDOWN)
-		{
-			switch (Event.key.keysym.sym)
-			{
-				default:
-					GameState = GSTitleScreenInit;
-					break;
-			}
-		}
-	}
+	if (((currButtons & kButtonA) && (!(prevButtons & kButtonA))) ||
+		((currButtons & kButtonB) && (!(prevButtons & kButtonB))))
+		GameState = GSTitleScreenInit;
+
 	if (CreditsNrOfChars < strlen(Tekst))
 		CreditsNrOfChars++;
-	SDL_BlitSurface(Background,NULL,Screen,NULL);
-	TTF_SetFontStyle(font,TTF_STYLE_UNDERLINE);
-	SDL_Color Color1 = {0,0,0,0};
-	WriteText(Screen,font,"CREDITS",7,Screen-> w / 2 - 32,20,0,Color1);
-	TTF_SetFontStyle(font,TTF_STYLE_NORMAL);
-	WriteText(Screen,font,Tekst,CreditsNrOfChars,30,40,0,Color1);
+
+	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
+	pd->graphics->drawText("CREDITS", strlen("CREDITS"), kASCIIEncoding, WINDOW_WIDTH / 2 - 32, 20);
+	pd->graphics->drawText(Tekst, CreditsNrOfChars,kASCIIEncoding, 30, 40);
+	//SDL_BlitSurface(Background,NULL,Screen,NULL);
+	//TTF_SetFontStyle(font,TTF_STYLE_UNDERLINE);
+	//SDL_Color Color1 = {0,0,0,0};
+	/*WriteText(Screen,font,"CREDITS",7,Screen-> w / 2 - 32,20,0,Color1);
+	TTF_SetFontStyle(font,TTF_STYLE_NORMAL);*/
+	//WriteText(Screen,font,Tekst,CreditsNrOfChars,30,40,0,Color1);
 	
 	if (GameState != GSCredits)
 		CreditsDeInit();

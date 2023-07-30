@@ -1,12 +1,12 @@
 #ifndef CPASSWORDSELECTOR_H
 #define CPASSWORDSELECTOR_H
 
-#include <SDL.h>
+#include <pd_api.h>
 
 typedef struct CPasswordSelector CPasswordSelector;
 struct CPasswordSelector
 {
- 	SDL_Surface* Image;
+ 	LCDBitmap* Image;
  	int X,Y;
 } ;
 

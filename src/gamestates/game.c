@@ -1,8 +1,8 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <time.h>
+#include <pd_api.h>
 #include <stdbool.h>
+#include "../pd_helperfuncs.h"
 #include "../commonvars.h"
+#include "../sound.h"
 #include "gamecommon.h"
 #include "game.h"
 
@@ -168,8 +168,7 @@ void FlipBlock(const bool Horizontal)
 	for(X=BlockW;X>=0;X--)
 		for(Y=BlockH;Y>=0;Y--)
 			PlayField[1][MinX+X][MinY+Y] = Tmp[X][Y];
-	if (GlobalSoundEnabled && SoundEnabled)
-		Mix_PlayChannel(-1,Sounds[SND_FlipBlock],0);
+	playFlipBlockSound();
 }
 
 void RotateBlock()
@@ -218,8 +217,7 @@ void RotateBlock()
   		NewBlockH = BlockW;
  		if((MinY + ( NewBlockH / 2) >= Rows) || (MinY - ((NewBlockH -1)/ 2) <0) || (MinX + BlockW / 2 > Cols))
  		{
- 			if(GlobalSoundEnabled && SoundEnabled)
- 				Mix_PlayChannel(-1,Sounds[SND_Error],0);
+			playErrorSound();
  			return;
  		}
  		for(X=BlockW-1;X>=0;X--)
@@ -250,8 +248,7 @@ void RotateBlock()
 			Offset = 0;
 		if((MinX + Offset +  NewBlockW / 2 >= Cols) || (MinX + Offset - (NewBlockW-1)/2 <0) || (MinY + (BlockH) /2 > Rows))
 		{
-			if(GlobalSoundEnabled && SoundEnabled)
- 				Mix_PlayChannel(-1,Sounds[SND_Error],0);
+			playErrorSound();
  			return;
 		}
 		for(X=BlockW-1;X>=0;X--)
@@ -271,29 +268,52 @@ void RotateBlock()
 				   	PlayField[1][MinX+X + Offset - Tmp1][MinY + Y +  Tmp2] = Tmp[X][Y];
 			}
 	}
-	if(GlobalSoundEnabled && SoundEnabled)
-			Mix_PlayChannel(-1,Sounds[SND_RotateBlock],0);
+	playRotateBlockSound();
 }
 
 
 void LoadLevel()
 {
 	int X,Y, Value;
-	FILE *PFile;
-	char FileName[FILENAME_MAX];
-	sprintf(FileName,"./levels/level%d.lev",Level);
-	PFile = fopen(FileName,"r");
+	SDFile *PFile;
+	char* FileName;
+	char buf = '\0';
+	char value[5];
+	int ret, pos, intval;
+	pd->system->formatString(&FileName,"./levels/level%d.lev",Level);
+	PFile = pd->file->open(FileName, kFileRead);
 	if(PFile)
 	{
 		for (X=0;X<Cols;X++)
 		{ 	for (Y=0;Y <Rows;Y++)
 	 		{
-	 			fscanf(PFile,"%d,",&Value);
-	 			PlayField[0][X][Y] = Value;
+				pos = 0;
+				ret = 1;
+				buf = '\0';
+				memset(value, 0, 5);
+				//levels are comma seperated integers
+				while ((buf != ',') && (ret > 0))
+				{
+					ret = pd->file->read(PFile, &buf, 1);
+					if (ret == 1)
+					{
+						if (buf != ',')
+						{
+							value[pos] = buf;
+							pos++;
+						}
+					}
+
+					if (pos > 4)
+						break;
+				}
+				
+				intval = atoi(value);
+				PlayField[0][X][Y] = intval;
 	 			PlayField[1][X][Y] = 0;
 	 		}
 		}
-		fclose(PFile);
+		pd->file->close(PFile);
 	}
 }
 
@@ -374,29 +394,27 @@ bool IsStageClear()
     
 void GameInit()
 {
+	GameMoveCoolDown = 0;
 	BlockActive = false;
 	LoadLevel();
 	CHand_SetPosition(Hand,10, 8);
 	CHand_Show(Hand);
-	srand ( time(NULL) );
-	StartTime = time(NULL);
-	Background = IMG_Load("./graphics/roombackground.png");
+	srand (pd->system->getSecondsSinceEpoch(NULL));
+	StartTime = pd->system->getSecondsSinceEpoch(NULL);
+	Background = loadImageAtPath("graphics/roombackground");
 	switch(rand()%2)
 	{
-		case 0 : if(GlobalSoundEnabled && MusicEnabled)
-				 	Mix_PlayMusic(Music[MUS_Game1],-1);
-				 break;
-		case 1 : if(GlobalSoundEnabled && MusicEnabled)
-				 	Mix_PlayMusic(Music[MUS_Game2],-1);
+		case 0: SelectMusic(musGame1);
+				break;
+		case 1 : SelectMusic(musGame2);
 				 break;
 
 	}
-	SDL_PollEvent(&Event);
 }
 
 void GameDeInit()
 {
-	SDL_FreeSurface(Background);
+	pd->graphics->freeBitmap(Background);
 }
 
 void Game()
@@ -407,84 +425,65 @@ void Game()
 		GameState -= GSInitDiff;
 	}
 
-	while(SDL_PollEvent(&Event))
-	{
-		if (Event.type == SDL_KEYDOWN)
-		{
-			switch(Event.key.keysym.sym)
-			{
-				case SDLK_ESCAPE :
+				/*case SDLK_ESCAPE :
 					GameState = GSTitleScreenInit;
 					Mix_HaltMusic();
-					break;
-				case SDLK_x :
-					if(!BlockActive)
-					{
-						int PlayFieldX,PlayFieldY,BlockNr;
-						PlayFieldX = CHand_GetPlayFieldX(Hand);
-						PlayFieldY = CHand_GetPlayFieldY(Hand);
-						BlockNr = PlayField[0][PlayFieldX][PlayFieldY];
-						if (BlockNr > 0)
-						{
-							if(GlobalSoundEnabled && SoundEnabled)
-								Mix_PlayChannel(-1,Sounds[SND_PickupBlock],0);
-							BlockActive = true;
-							CHand_Hide(Hand);
-							MakeBlockActive(PlayFieldX,PlayFieldY,BlockNr);
-						}
-					}
-					else
-					{
-						if(MakeBlockUnActive())
-						{
-							if(GlobalSoundEnabled && SoundEnabled)
-								Mix_PlayChannel(-1,Sounds[SND_DropBlock],0);
-							BlockActive = false;
-							if(IsStageClear())
-							{
-								GameState = GSStageClearInit;
-								if(GlobalSoundEnabled && SoundEnabled)
-									Mix_PlayChannel(-1,Sounds[SND_StageEnd],0);
-							}
-							else
-								CHand_Show(Hand);
-						}
-						else
-							if(GlobalSoundEnabled && SoundEnabled)
-								Mix_PlayChannel(-1,Sounds[SND_Error],0);
-					}
-					break;
-				case SDLK_LEFT:
-					if(BlockActive)
-					{
-						Uint8* keyState =  SDL_GetKeyState(NULL);
-						if ((keyState[SDLK_c]))
-						{
-							FlipBlock(true);
-						}
-					}
-					break;
-				case SDLK_RIGHT:
-					if(BlockActive)
-					{
-						Uint8* keyState =  SDL_GetKeyState(NULL);
-						if ((keyState[SDLK_c]))
-						{
-							FlipBlock(false);
-						}
-					}
-					break;
-				case SDLK_UP:
-					if(BlockActive)
-					{
-						Uint8* keyState =  SDL_GetKeyState(NULL);
-						if ((keyState[SDLK_c]))
-						{
-							RotateBlock();
-						}
-					}
-					break;
-				case SDLK_r:
+					break;*/
+	if ((currButtons & kButtonA) && !(prevButtons & kButtonA))
+	{
+		if (!BlockActive)
+		{
+			int PlayFieldX, PlayFieldY, BlockNr;
+			PlayFieldX = CHand_GetPlayFieldX(Hand);
+			PlayFieldY = CHand_GetPlayFieldY(Hand);
+			BlockNr = PlayField[0][PlayFieldX][PlayFieldY];
+			if (BlockNr > 0)
+			{
+				playPickupBlockSound();
+				BlockActive = true;
+				CHand_Hide(Hand);
+				MakeBlockActive(PlayFieldX, PlayFieldY, BlockNr);
+			}
+		}
+		else
+		{
+			if (MakeBlockUnActive())
+			{
+				playDropBlockSound();
+				BlockActive = false;
+				if (IsStageClear())
+				{
+					GameState = GSStageClearInit;
+					playStageEndSound();
+				}
+				else
+					CHand_Show(Hand);
+			}
+			else
+				playErrorSound();
+		}
+	}
+
+	if ((currButtons & kButtonB) && ((currButtons & kButtonLeft) &&  !(prevButtons & kButtonLeft)))
+	{
+		if (BlockActive)
+		{
+				FlipBlock(true);
+		}
+	}
+	
+	if ((currButtons & kButtonB) && ((currButtons & kButtonRight) && !(prevButtons & kButtonRight)))
+	{
+		if (BlockActive)
+			FlipBlock(false);
+	}
+
+	if ((currButtons & kButtonB) && ((currButtons & kButtonUp) && !(prevButtons & kButtonUp)))
+	{
+		if (BlockActive)
+			RotateBlock();
+	}
+	/*	case SDLK_r:
 					LoadLevel();
 					BlockActive = false;
 					CHand_SetPosition(Hand,10,8);
@@ -492,34 +491,39 @@ void Game()
 					break;
 				default:
 					break;
-			}
-		}
-	}
-	if (BlockActive)
+	*/
+	if (GameMoveCoolDown > 0)
+		GameMoveCoolDown--;
+	if (BlockActive && (GameMoveCoolDown == 0))
 	{
-		Uint8* keyState =  SDL_GetKeyState(NULL);
-		if(!keyState[SDLK_c])
-		{			
-			if (keyState[SDLK_RIGHT])
+		if (!(currButtons & kButtonB))
+		{
+			if (currButtons & kButtonRight)
 			{
 				MoveBlockRight();
+				GameMoveCoolDown = 3;
 			}
-			if (keyState[SDLK_LEFT])
+			if (currButtons & kButtonLeft)
 			{
 				MoveBlockLeft();
+				GameMoveCoolDown = 3;
 			}
-			if (keyState[SDLK_UP])
+			if (currButtons & kButtonUp)
 			{
 				MoveBlockUp();
+				GameMoveCoolDown = 3;
 			}
-			if (keyState[SDLK_DOWN])
+			if (currButtons & kButtonDown)
 			{
 				MoveBlockDown();
+				GameMoveCoolDown = 3;
 			}
 		}
 	}
-	EndTime = time(NULL);
-	SDL_BlitSurface(Background,NULL,Screen,NULL);
+	EndTime = pd->system->getSecondsSinceEpoch(NULL);
+	
+	//SDL_BlitSurface(Background,NULL,Screen,NULL);
+	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 	DrawPanel();
 	DrawPlayField();
 	CHand_Move(Hand);

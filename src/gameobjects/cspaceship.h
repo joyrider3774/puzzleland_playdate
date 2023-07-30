@@ -1,13 +1,13 @@
 #ifndef CSPACESHIP_H
 #define CSPACESHIP_H
 
-#include <SDL.h>
+#include <pd_api.h>
 
 typedef struct CSpaceShip CSpaceShip;
 struct CSpaceShip
 {
  	int X,Y;
- 	SDL_Surface* Image;
+ 	LCDBitmap* Image;
 };
 
 void CSpaceShip_destroy(CSpaceShip* spaceShip);
