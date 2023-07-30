@@ -8,8 +8,8 @@ CSpaceShip* CSpaceShip_Create()
 {
 	CSpaceShip* Result = pd->system->realloc(NULL, sizeof(CSpaceShip));
 	Result->Image = loadImageAtPath("graphics/spaceship");
-	Result->X=-32;
-	Result->Y= 28;
+	Result->X=-53;
+	Result->Y= 22;
 	return Result;
 }
 

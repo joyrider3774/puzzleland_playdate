@@ -257,10 +257,16 @@ void NextStageLevel1to35()
 				break;
 		}
 
-		int textw = pd->graphics->getTextWidth(Mini, LevelPasswords[Level], strlen(LevelPasswords[Level]), kASCIIEncoding, 0);
 		CSpaceShip_Move(SpaceShip);
+		int textw = pd->graphics->getTextWidth(Mini2X, LevelPasswords[Level], strlen(LevelPasswords[Level]), kASCIIEncoding, 0);
 		if (CSpaceShip_GetX(SpaceShip) > (WINDOW_WIDTH >> 1) - (textw >> 1))
-			pd->graphics->drawText(LevelPasswords[Level], strlen(LevelPasswords[Level]), kASCIIEncoding, (WINDOW_WIDTH >> 1) - (textw >> 1), 25);
+		{
+			pd->graphics->fillRect((WINDOW_WIDTH >> 1) - (textw >> 1) - 2, 32, textw + 4, 20, kColorWhite);
+			pd->graphics->pushContext(NULL);
+			pd->graphics->setFont(Mini2X);
+			pd->graphics->drawText(LevelPasswords[Level], strlen(LevelPasswords[Level]), kASCIIEncoding, (WINDOW_WIDTH >> 1) - (textw >> 1), 34);
+			pd->graphics->popContext();
+		}
 			//SDL_BlitSurface(Text,NULL,Screen,&TextDstRect);
 		CSpaceShip_Draw(SpaceShip);
 		
