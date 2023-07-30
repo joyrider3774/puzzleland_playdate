@@ -24,35 +24,17 @@ int GetLevel(char *Password)
 
 void DrawPanel()
 {
-	/*const SDL_Color Color = {255,255,255,0};
-	SDL_Rect aDstRect;
-	char ChrText[100];
-	sprintf(ChrText,"Room Number: %d",Level);
-	Text = TTF_RenderText_Solid(font,ChrText,Color);
-	aDstRect.x = 30;
-	aDstRect.y = 0;
-	aDstRect.w = Text->w;
-	aDstRect.h = Text->h;
-	SDL_BlitSurface(Text,NULL,Screen,&aDstRect);
-	pd->graphics->freeBitmap(Text);
-	sprintf(ChrText,"Time: %02llu:%02llu:%02llu",(EndTime - StartTime) / 3600, ((EndTime - StartTime)%3600)/60,(EndTime-StartTime)%60);
-	Text = TTF_RenderText_Solid(font,ChrText,Color);
-	aDstRect.x = 175;
-	aDstRect.y = 0;
-	aDstRect.w = Text->w;
-	aDstRect.h = Text->h;
-	SDL_BlitSurface(Text,NULL,Screen,&aDstRect);
-	pd->graphics->freeBitmap(Text);*/
-
 	char* ChrText;
+	pd->graphics->pushContext(NULL);
+	pd->graphics->setFont(NULL);
 	pd->graphics->setDrawMode(kDrawModeInverted);
 	pd->system->formatString(&ChrText, "Room Number: %d", Level);
-	pd->graphics->drawText(ChrText, strlen(ChrText), kASCIIEncoding, 30, 0);
+	pd->graphics->drawText(ChrText, strlen(ChrText), kASCIIEncoding, 30, 4);
 	pd->system->realloc(ChrText, 0);
 	pd->system->formatString(&ChrText, "Time: %02u:%02u:%02u", (EndTime - StartTime) / 3600, ((EndTime - StartTime) % 3600) / 60, (EndTime - StartTime) % 60);
-	pd->graphics->drawText(ChrText, strlen(ChrText), kASCIIEncoding, 175, 0);
+	pd->graphics->drawText(ChrText, strlen(ChrText), kASCIIEncoding, 180, 4);
 	pd->system->realloc(ChrText, 0);
-	pd->graphics->setDrawMode(kDrawModeCopy);
+	pd->graphics->popContext();
 }
 
 void DrawPlayField()
