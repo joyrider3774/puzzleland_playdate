@@ -13,6 +13,7 @@ CPasswordSelector* PasswordSelector;
 
 void PasswordEntryInit()
 {
+	PasswordEntryCoolDown = 0;
 	CharNr = 0;
 	Password[0] = ' ';
 	Password[1] = ' ';
@@ -40,74 +41,71 @@ void PasswordEntry()
 	
 	if (Password[3] != ' ')
 	{
-		//SDL_Delay(250);
-		if (GetLevel(Password) == -1)
+		if (PasswordEntryCoolDown > 0)
+			PasswordEntryCoolDown--;
+		if (PasswordEntryCoolDown == 0)
 		{
-			Password[0] = ' ';
-			Password[1] = ' ';
-			Password[2] = ' ';
-			Password[3] = ' ';
-			playErrorSound();
-		}
-		else
-			if(GetLevel(Password) == 0)
+			if (GetLevel(Password) == -1)
 			{
-				GameState = GSStageSelectInit;
+				Password[0] = ' ';
+				Password[1] = ' ';
+				Password[2] = ' ';
+				Password[3] = ' ';
+				playErrorSound();
 			}
 			else
-			{
-				Level = GetLevel(Password);
-				GameState = GSOldManSpeakingInit;
-				//Mix_HaltMusic();
-			}
+				if (GetLevel(Password) == 0)
+				{
+					GameState = GSStageSelectInit;
+				}
+				else
+				{
+					Level = GetLevel(Password);
+					GameState = GSOldManSpeakingInit;
+				}
+		}
 	}
+
 	if(GameState == GSPasswordEntry)
 	{
-		if ((currButtons & kButtonB) && !(prevButtons & kButtonB))
+		if (PasswordEntryCoolDown == 0)
 		{
-			GameState = GSTitleScreenInit;
+			if ((currButtons & kButtonB) && !(prevButtons & kButtonB))
+			{
+				GameState = GSTitleScreenInit;
+			}
+
+			if ((currButtons & kButtonA) && !(prevButtons & kButtonA))
+			{
+				Password[CharNr] = Letters[CPasswordSelector_GetY(PasswordSelector)][CPasswordSelector_GetX(PasswordSelector)];
+				playMenuSelectSound();
+				CharNr++;
+				if (CharNr > 3)
+				{
+					PasswordEntryCoolDown = (int)(FRAMERATE / 2);
+					CharNr = 0;
+				}
+			}
+
+			if ((currButtons & kButtonUp) && !(prevButtons & kButtonUp))
+				CPasswordSelector_MoveUp(PasswordSelector);
+
+			if ((currButtons & kButtonDown) && !(prevButtons & kButtonDown))
+				CPasswordSelector_MoveDown(PasswordSelector);
+
+			if ((currButtons & kButtonLeft) && !(prevButtons & kButtonLeft))
+				CPasswordSelector_MoveLeft(PasswordSelector);
+
+			if ((currButtons & kButtonRight) && !(prevButtons & kButtonRight))
+				CPasswordSelector_MoveRight(PasswordSelector);
 		}
-		
-		if ((currButtons & kButtonA) && !(prevButtons & kButtonA))
-		{
-			Password[CharNr] = Letters[CPasswordSelector_GetY(PasswordSelector)][CPasswordSelector_GetX(PasswordSelector)];
-			playMenuSelectSound();
-			CharNr++;
-			if (CharNr > 3)
-				CharNr = 0;
-		}
-		
-		if ((currButtons & kButtonUp) && !(prevButtons & kButtonUp))
-			CPasswordSelector_MoveUp(PasswordSelector);
-		
-		if ((currButtons & kButtonDown) && !(prevButtons & kButtonDown))
-			CPasswordSelector_MoveDown(PasswordSelector);
-		
-		if ((currButtons & kButtonLeft) && !(prevButtons & kButtonLeft))
-			CPasswordSelector_MoveLeft(PasswordSelector);
-		
-		if ((currButtons & kButtonRight) && !(prevButtons & kButtonRight))
-			CPasswordSelector_MoveRight(PasswordSelector);
-		
-		/*SDL_Rect aDstRect;
-		SDL_BlitSurface(Background,NULL,Screen,NULL);
-		SDL_Color Color1 = {0,0,0,0};
-		if (strlen(Password) > 0)
-		{
-			Text = TTF_RenderText_Solid(font,Password,Color1);
-			
-			aDstRect.x = Screen->w / 2 - Text->w / 2;
-			aDstRect.y = 37;
-			aDstRect.w = Text->w;
-			aDstRect.h = Text->h;
-			SDL_BlitSurface(Text,NULL,Screen,&aDstRect);
-			pd->graphics->freeBitmap(Text);
-		}*/
 		pd->graphics->clear(kColorWhite);
 		pd->graphics->setBackgroundColor(kColorWhite);
 		pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
+		pd->graphics->pushContext(NULL);
+		pd->graphics->setFont(Mini2X);
 		int textw = pd->graphics->getTextWidth(Mini, Password, strlen(Password), kASCIIEncoding, 0);
 		pd->graphics->drawText(Password, strlen(Password), kASCIIEncoding, (WINDOW_WIDTH >> 1) - textw, 37);
 		int LetterX,LetterY;
@@ -118,16 +116,10 @@ void PasswordEntry()
 				{
 					char Letter[2] = "\0";
 					Letter[0] = Letters[LetterY][LetterX];
-					/*Text = TTF_RenderText_Solid(font, &Letter[0],Color1);
-					aDstRect.x = XOffsetPassword + LetterX * 35;
-					aDstRect.y = YOffsetPassword + LetterY * 35;
-					aDstRect.w = Text->w;
-					aDstRect.h = Text->h;
-					SDL_BlitSurface(Text,NULL,Screen,&aDstRect);
-					pd->graphics->freeBitmap(Text);*/
-					pd->graphics->drawText(&Letter[0], 1, kASCIIEncoding, XOffsetPassword + LetterX * 35, XOffsetPassword + LetterY * 35);
+					pd->graphics->drawText(&Letter[0], 1, kASCIIEncoding, XOffsetPassword + LetterX * 35, YOffsetPassword + LetterY * 35);
 				}
 			}
+		pd->graphics->popContext();
 		CPasswordSelector_Draw(PasswordSelector);
 	}
 	

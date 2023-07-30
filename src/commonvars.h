@@ -75,7 +75,7 @@ extern int Level;
 extern CHand* Hand;
 extern unsigned int StartTime,EndTime;
 extern uint32_t OldTime;
-extern int GameMoveCoolDown;
+extern int GameMoveCoolDown, PasswordEntryCoolDown;
 
 //Puzzle Game Stuff
 extern LCDBitmap* BlockImages[BlockCount];

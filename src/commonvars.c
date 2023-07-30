@@ -22,7 +22,7 @@ PlaydateAPI* pd;
 PDButtons currButtons, prevButtons;
 unsigned int prevLogTime = 0u;
 int showFps = ShowFpsDefault;
-int GameMoveCoolDown;
+int GameMoveCoolDown, PasswordEntryCoolDown;
 
 //common stuff
 LCDBitmap* Background = NULL;
