@@ -81,7 +81,7 @@ void Options()
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 
 	int textw = pd->graphics->getTextWidth(Mini2X, "OPTIONS", strlen("OPTIONS"), kASCIIEncoding, 0);
-	pd->graphics->drawText("OPTIONS", strlen("OPTIONS"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - (textw >> 1), 30, 0);
+	pd->graphics->drawText("OPTIONS", strlen("OPTIONS"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - (textw >> 1), 30);
 	
 	if (isSoundOn())
 		pd->graphics->drawText("SOUND: ON", strlen("SOUND: ON"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - 55, 70);
