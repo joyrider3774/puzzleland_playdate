@@ -36,14 +36,6 @@ void StageClear()
 	if ((currButtons & kButtonB) && !(prevButtons & kButtonB))
 		KaderVisible = !KaderVisible;
 	
-	/*SDL_Rect aDstRect;
-	aDstRect.x = XOffsetGame-4;
-	aDstRect.y = YOffsetGame + 75;
-	aDstRect.w = StageClearKader->w;
-	aDstRect.h = StageClearKader->h;
-	SDL_BlitSurface(RoomBackground,NULL,Screen,NULL);
-	*/
-
 	pd->graphics->clear(kColorBlack);
 	pd->graphics->setBackgroundColor(kColorBlack);
 	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -52,8 +44,11 @@ void StageClear()
 	DrawPanel();
 	DrawPlayField();
 	if (KaderVisible)
-		pd->graphics->drawBitmap(StageClearKader, XOffsetGame - 4, YOffsetGame + 75, kBitmapUnflipped);
-	//	SDL_BlitSurface(StageClearKader,NULL,Screen,&aDstRect);
+	{
+		int w;
+		pd->graphics->getBitmapData(StageClearKader, &w, NULL, NULL, NULL, NULL);
+		pd->graphics->drawBitmap(StageClearKader, (WINDOW_WIDTH - w)>>1, YOffsetGame + 75, kBitmapUnflipped);
+	}
 
 	if(GameState != GSStageClear)
 		StageClearDeInit();
