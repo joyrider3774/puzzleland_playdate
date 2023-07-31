@@ -37,7 +37,7 @@ void Credits()
 
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 	pd->graphics->pushContext(NULL);
-	pd->graphics->setFont(NULL);
+	pd->graphics->setFont(Ash);
 	pd->graphics->drawText("CREDITS", strlen("CREDITS"), kASCIIEncoding, WINDOW_WIDTH / 2 - 32, 20);
 	pd->graphics->drawText(Tekst, CreditsNrOfChars,kASCIIEncoding, 30, 40);
 	pd->graphics->popContext();

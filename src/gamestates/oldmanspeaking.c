@@ -139,7 +139,7 @@ void OldManSpeaking()
 			TextDelay = 0;
 		}
 		pd->graphics->pushContext(NULL);
-		pd->graphics->setFont(NULL);
+		pd->graphics->setFont(Ash);
 		pd->graphics->drawText(List[PageNr], NrOfChars, kASCIIEncoding, 50, 50);
 		pd->graphics->popContext();
 	}

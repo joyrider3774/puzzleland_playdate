@@ -214,7 +214,7 @@ void NextStageLevel1to35()
 		CSpaceShip_Draw(SpaceShip);
 		
 		pd->graphics->pushContext(NULL);
-		pd->graphics->setFont(NULL);
+		pd->graphics->setFont(Ash);
 		char* ChrLevel;
 		pd->system->formatString(&ChrLevel, "%02d", Level + 1);
 		pd->graphics->drawText(ChrLevel, strlen(ChrLevel), kASCIIEncoding, 270, 110);
@@ -280,7 +280,7 @@ void NextStageLevel0()
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 
 	pd->graphics->pushContext(NULL);
-	pd->graphics->setFont(NULL);
+	pd->graphics->setFont(Ash);
 	char* ChrLevel;
 	pd->system->formatString(&ChrLevel, "%02d", Level + 1);
 	pd->graphics->drawText(ChrLevel, strlen(ChrLevel), kASCIIEncoding, 270, 110);

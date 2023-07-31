@@ -28,7 +28,7 @@ int GameMoveCoolDown, PasswordEntryCoolDown;
 LCDBitmap* Background = NULL;
 LCDBitmap* Text = NULL;
 CFairy* Fairy;
-LCDFont* Nano, * Mini, * Mini2X;
+LCDFont* Nano, * Mini, * Mini2X, *Ash;
 
 //Game Stuff
 int GameState = GSIntroInit;

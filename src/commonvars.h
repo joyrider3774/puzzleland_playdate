@@ -100,7 +100,7 @@ extern unsigned int prevLogTime;
 extern unsigned int FrameTime, Frames;
 extern float CurrentMs;
 
-extern LCDFont* Nano, * Mini, * Mini2X;
+extern LCDFont* Nano, * Mini, * Mini2X, * Ash;
 
 void setPDPtr(PlaydateAPI* p);
 #endif

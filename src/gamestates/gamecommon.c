@@ -84,7 +84,7 @@ void DrawPanel()
 {
 	char* ChrText;
 	pd->graphics->pushContext(NULL);
-	pd->graphics->setFont(NULL);
+	pd->graphics->setFont(Ash);
 	pd->graphics->setDrawMode(kDrawModeInverted);
 	pd->system->formatString(&ChrText, "Room Number: %d", Level);
 	pd->graphics->drawText(ChrText, strlen(ChrText), kASCIIEncoding, 30, 4);

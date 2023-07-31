@@ -20,6 +20,7 @@ void LoadFonts(void)
 	Nano = loadFontAtPath("fonts/Nano Sans/Nano Sans");
 	Mini = loadFontAtPath("fonts/Mini Sans/Mini Sans");
 	Mini2X = loadFontAtPath("fonts/Mini Sans 2X/Mini Sans 2X");
+	Ash = loadFontAtPath("fonts/Asheville-Sans-14-Bold/Asheville-Sans-14-Bold");
 }
 
 void setupGame()

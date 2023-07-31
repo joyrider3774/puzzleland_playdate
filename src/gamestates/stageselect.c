@@ -61,7 +61,7 @@ void StageSelect()
 
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 	pd->graphics->pushContext(NULL);
-	pd->graphics->setFont(NULL);
+	pd->graphics->setFont(Ash);
 	int textw = pd->graphics->getTextWidth(Mini, "ROOM SELECT", strlen("ROOM SELECT"), kASCIIEncoding, 0);
 	pd->graphics->drawText("ROOM SELECT", strlen("ROOM SELECT"), kASCIIEncoding, (WINDOW_WIDTH >> 1) - (textw >> 1) -10, 20);
 	
