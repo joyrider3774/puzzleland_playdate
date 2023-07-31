@@ -58,3 +58,8 @@ dkms.conf
 /old sources
 /out
 /.vs
+/Source/music/game1.wav
+/Source/music/game2.wav
+/Source/music/oldman.wav
+/Source/music/stage.wav
+/Source/music/title.wav

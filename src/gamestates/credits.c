@@ -21,7 +21,7 @@ void CreditsDeInit()
 
 void Credits()
 {
-	char *Tekst = "Puzzle Land is programmed by\nWillems Davy. Graphics are made\nusing gimp. A Big thanks goes out\nto Yann R. Fernandez for creating\nsome of the graphics.\n\nPuzzle Land is a remake of\nDaedalian opus for gameboy by\nVic Tokai Inc. 1990";
+	char *Tekst = "Puzzle Land is made by Willems Davy\nGraphics made using gimp\nSprites by Yann R. Fernandez\nMusic by MusMus:\nhttps://musmus.main.jp\n\nPuzzle Land is a remake of\nDaedalian opus for gameboy by\nVic Tokai Inc. 1990";
 
 	if(GameState == GSCreditsInit)
 	{
