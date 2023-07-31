@@ -1,5 +1,6 @@
 #include <pd_api.h>
 #include <stdbool.h>
+#include <string.h>
 #include "../pd_helperfuncs.h"
 #include "../sound.h"
 #include "../gameobjects/cfairy.h"

@@ -1,5 +1,6 @@
 #include <pd_api.h>
 #include <stdbool.h>
+#include <string.h>
 #include "../pd_helperfuncs.h"
 #include "../commonvars.h"
 #include "../sound.h"

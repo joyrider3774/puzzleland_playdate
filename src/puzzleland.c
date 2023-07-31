@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <string.h>
 #include "gamestates/game.h"
 #include "gamestates/stageclear.h"
 #include "gamestates/nextstage.h"
@@ -36,7 +37,6 @@ void setupGame()
 	setSoundOn(true);
 	pd->graphics->setFont(Mini);
 	Hand = CHand_Create();
-	pd->system->getButtonState(&currButtons, NULL, NULL);
 }
 
 int mainLoop(void* ud)

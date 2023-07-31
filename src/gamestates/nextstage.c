@@ -1,5 +1,6 @@
 #include <pd_api.h>
 #include <stdbool.h>
+#include <string.h>
 #include "../sound.h"
 #include "../pd_helperfuncs.h"
 #include "../gameobjects/cspaceship.h"

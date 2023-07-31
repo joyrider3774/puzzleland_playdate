@@ -1,3 +1,4 @@
+#include <string.h>
 #include "pd_api.h"
 #include "../pd_helperfuncs.h"
 #include "../commonvars.h"
