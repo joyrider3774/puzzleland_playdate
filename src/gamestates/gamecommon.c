@@ -105,23 +105,44 @@ void DrawPlayField()
 			{
 				if (PlayField[Layers][X][Y] > 0)
 				{
-					/*aDstRect.x = XOffsetGame + X * BlockWidth;
-					aDstRect.y = YOffsetGame + Y * BlockHeight;
-					aDstRect.w = BlockWidth;
-					aDstRect.h = BlockHeight;
-					SDL_BlitSurface(BlockImages[PlayField[Layers][X][Y] -1],NULL,Screen,&aDstRect);*/
-					pd->graphics->drawBitmap(BlockImages[PlayField[Layers][X][Y] - 1], XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, kBitmapUnflipped);
+					//pd->graphics->drawBitmap(BlockImages[PlayField[Layers][X][Y] - 1], XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, kBitmapUnflipped);
+					//simple line drawing of same type of blocks, this will form shapes which is way batter than what i had before
+					pd->graphics->drawBitmap(BlockImage, XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, kBitmapUnflipped);
+					if ((X == 0) || ((X > 0) && (PlayField[Layers][X - 1][Y] != PlayField[Layers][X][Y])))
+					{
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight, 1, kColorBlack);
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth +1, YOffsetGame + Y * BlockHeight, XOffsetGame + X * BlockWidth+1, YOffsetGame + Y * BlockHeight + BlockHeight, 1, kColorBlack);
+					}
+					if ((X == Cols-1) || ((X < Cols-1) && (PlayField[Layers][X + 1][Y] != PlayField[Layers][X][Y])))
+					{
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth + BlockWidth , YOffsetGame + Y * BlockHeight,  XOffsetGame + X * BlockWidth + BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight, 1, kColorBlack);
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth + BlockWidth-1, YOffsetGame + Y * BlockHeight, XOffsetGame + X * BlockWidth + BlockWidth-1, YOffsetGame + Y * BlockHeight + BlockHeight, 1, kColorBlack);
+					}
+					if ((Y == 0) || ((Y > 0) && (PlayField[Layers][X][Y-1] != PlayField[Layers][X][Y])))
+					{
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight ,  XOffsetGame + X * BlockWidth + BlockWidth, YOffsetGame + Y * BlockHeight, 1, kColorBlack);
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight+1, XOffsetGame + X * BlockWidth + BlockWidth, YOffsetGame + Y * BlockHeight+1, 1, kColorBlack);
+					}
+					if ((Y == Rows-1) || ((Y < Rows-1) && (PlayField[Layers][X][Y + 1] != PlayField[Layers][X][Y])))
+					{
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight, XOffsetGame + X * BlockWidth + BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight, 1, kColorBlack);
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight-1, XOffsetGame + X * BlockWidth + BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight-1, 1, kColorBlack);
+					}
 				}
 
 				if (PlayField[Layers][X][Y] < 0)
 				{
-					//aDstRect.x = XOffsetGame + X * BlockWidth;
-					//aDstRect.y = YOffsetGame + Y * BlockHeight;
-					//aDstRect.w = BlockWidth;
-					//aDstRect.h = BlockHeight;
-					//SDL_BlitSurface(BorderImages[abs(PlayField[Layers][X][Y]) -1],NULL,Screen,&aDstRect);
 					pd->graphics->drawBitmap(BorderImages[abs(PlayField[Layers][X][Y]) - 1], XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, kBitmapUnflipped);
-
+					if ((X == Cols - 1) || ((X < Cols - 1) && (PlayField[Layers][X + 1][Y] != PlayField[Layers][X][Y])))
+					{
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth + BlockWidth, YOffsetGame + Y * BlockHeight, XOffsetGame + X * BlockWidth + BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight, 1, kColorBlack);
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth + BlockWidth + 1, YOffsetGame + Y * BlockHeight+1, XOffsetGame + X * BlockWidth + BlockWidth + 1, YOffsetGame + Y * BlockHeight + BlockHeight, 1, kColorBlack);
+					}
+					if ((Y == Rows - 1) || ((Y < Rows - 1) && (PlayField[Layers][X][Y + 1] != PlayField[Layers][X][Y])))
+					{
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight, XOffsetGame + X * BlockWidth + BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight, 1, kColorBlack);
+						pd->graphics->drawLine(XOffsetGame + X * BlockWidth+1, YOffsetGame + Y * BlockHeight + BlockHeight + 1, XOffsetGame + X * BlockWidth + BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight + 1, 1, kColorBlack);
+					}
 				}
 			}
 }
@@ -131,11 +152,7 @@ void LoadImages()
 {
 	int teller;
 	char* FileName;
-	for (teller=0;teller<BlockCount;teller++)
-	{
-		pd->system->formatString(&FileName,"graphics/block%d",teller+1);
-		BlockImages[teller] = loadImageAtPath(FileName);
-	}
+	BlockImage = loadImageAtPath("graphics/blockimage");
 	for (teller=0;teller<BorderCount;teller++)
 	{
 		pd->system->formatString(&FileName, "graphics/border%d",teller+1);
@@ -153,14 +170,11 @@ void LoadImages()
 void UnloadImages()
 {
 	int teller;
-	for (teller=0;teller<BlockCount;teller++)
-	{
-		pd->graphics->freeBitmap(BlockImages[teller]);
-	}
 	for (teller=0;teller<BorderCount;teller++)
 	{
 		pd->graphics->freeBitmap(BorderImages[teller]);
 	}
+	pd->graphics->freeBitmap(BlockImage);
 	pd->graphics->freeBitmap(RoomBackground);
 	pd->graphics->freeBitmap(StageClearKader);
 	pd->graphics->freeBitmap(Bridge);

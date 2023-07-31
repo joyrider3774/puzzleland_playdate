@@ -80,7 +80,7 @@ extern PDMenuItem* menuItem1, * menuItem2, * menuItem3;
 extern bool NeedGameReset;
 
 //Puzzle Game Stuff
-extern LCDBitmap* BlockImages[BlockCount];
+LCDBitmap* BlockImage;
 extern LCDBitmap *BorderImages[BorderCount];
 extern int PlayField[2][Cols][Rows];
 extern bool BlockActive;

@@ -40,7 +40,7 @@ uint32_t OldTime = 0;
 PDMenuItem* menuItem1 = NULL, * menuItem2 = NULL, * menuItem3 = NULL;
 
 //Puzzle Game Stuff
-LCDBitmap* BlockImages[BlockCount];
+LCDBitmap* BlockImage;
 LCDBitmap* BorderImages[BorderCount];
 int PlayField[2][Cols][Rows];
 bool BlockActive;
