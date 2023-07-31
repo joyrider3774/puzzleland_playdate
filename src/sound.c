@@ -18,6 +18,7 @@ SamplePlayer* dropBlockSoundPlayer;
 SamplePlayer* rotateBlockSoundPlayer;
 SamplePlayer* bridgeSoundPlayer;
 SamplePlayer* elfSoundPlayer;
+SamplePlayer* textSoundPlayer;
 
 
 AudioSample* stageEndSound;
@@ -30,6 +31,7 @@ AudioSample* dropBlockSound;
 AudioSample* rotateBlockSound;
 AudioSample* bridgeSound;
 AudioSample* elfSound;
+AudioSample* textSound;
 
 void stopMusic(void)
 {
@@ -123,6 +125,7 @@ void initSound(void)
     rotateBlockSoundPlayer = loadSoundFile(rotateBlockSound, "sounds/rotate");
     bridgeSoundPlayer = loadSoundFile(bridgeSound, "sounds/bridge");
     elfSoundPlayer = loadSoundFile(elfSound, "sounds/elf");
+    textSoundPlayer = loadSoundFile(textSound, "sounds/text");
 }
 
 void deInitSound(void)
@@ -137,6 +140,7 @@ void deInitSound(void)
     FreeSample(bridgeSound);
     FreeSample(elfSound);
     FreeSample(flipBlockSound);
+    FreeSample(textSound);
 
 
     FreeSoundPlayer(stageEndSoundPlayer);
@@ -149,6 +153,7 @@ void deInitSound(void)
     FreeSoundPlayer(bridgeSoundPlayer);
     FreeSoundPlayer(elfSoundPlayer);
     FreeSoundPlayer(flipBlockSoundPlayer);
+    FreeSoundPlayer(textSoundPlayer);
 }
 
 void playMusicFile(const char* path, int repeat)
@@ -220,7 +225,15 @@ void deInitMusic(void)
     musicPlayer = NULL;
 }
 
-void playSound(SamplePlayer* soundPlayer)
+void stopSound(SamplePlayer* soundPlayer)
+{
+    if (pd->sound->sampleplayer->isPlaying(soundPlayer))
+    {
+        pd->sound->sampleplayer->stop(soundPlayer);
+    }
+}
+
+void playSound(SamplePlayer* soundPlayer, int repeats)
 {
     if (!sound_on)
     {
@@ -231,55 +244,65 @@ void playSound(SamplePlayer* soundPlayer)
     {
         pd->sound->sampleplayer->stop(soundPlayer);
     }
-    pd->sound->sampleplayer->play(soundPlayer, 1, 1.0f);   
+    pd->sound->sampleplayer->play(soundPlayer, repeats, 1.0f);   
+}
+
+void stopTextSound(void)
+{
+    stopSound(textSoundPlayer);
+}
+
+void playTextSound(void)
+{
+    playSound(textSoundPlayer, 0);
 }
 
 void playRotateBlockSound(void)
 {
-    playSound(rotateBlockSoundPlayer);
+    playSound(rotateBlockSoundPlayer, 1);
 }
 
 void playElfSound(void)
 {
-    playSound(elfSoundPlayer);
+    playSound(elfSoundPlayer, 1);
 }
 
 void playStageEndSound(void)
 {
-    playSound(stageEndSoundPlayer);
+    playSound(stageEndSoundPlayer, 1);
 }
 
 void playBridgeSound(void)
 {
-    playSound(bridgeSoundPlayer);
+    playSound(bridgeSoundPlayer, 1);
 }
 
 void playErrorSound(void)
 {
-    playSound(errorSoundPlayer);
+    playSound(errorSoundPlayer, 1);
 }
 
 void playMenuSelectSound(void)
 {
-    playSound(menuSelectSoundPlayer);
+    playSound(menuSelectSoundPlayer, 1);
 }
 
 void playFlipBlockSound(void)
 {
-    playSound(flipBlockSoundPlayer);
+    playSound(flipBlockSoundPlayer, 1);
 }
 
 void playPickupBlockSound(void)
 {
-    playSound(pickupBlockSoundPlayer);
+    playSound(pickupBlockSoundPlayer, 1);
 }
 
 void playDropBlockSound(void)
 {
-    playSound(dropBlockSoundPlayer);
+    playSound(dropBlockSoundPlayer, 1);
 }
 
 void playMenuSound(void)
 {
-    playSound(menuSoundPlayer);
+    playSound(menuSoundPlayer, 1);
 }

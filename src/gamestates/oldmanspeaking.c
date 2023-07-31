@@ -73,6 +73,7 @@ void OldManSpeakingInit()
 				}
 			}
 			List[Lines][Chars] = '\0';
+			playTextSound();
 		break;
 		default:
 			GameState = GSNextStageInit;
@@ -82,6 +83,7 @@ void OldManSpeakingInit()
 
 void OldManSpeakingDeInit()
 {
+	stopTextSound();
 	if(Background)
 		pd->graphics->freeBitmap(Background);
 	CFairy_Destroy(Fairy);
@@ -109,6 +111,7 @@ void OldManSpeaking()
 			{
 				PageNr++;
 				NrOfChars = 0;
+				playTextSound();
 			}
 			else
 				if (Level < 36)
@@ -137,6 +140,8 @@ void OldManSpeaking()
 		{
 			if (NrOfChars < strlen(List[PageNr]))
 				NrOfChars++;
+			else
+				stopTextSound();
 			TextDelay = 0;
 		}
 		pd->graphics->pushContext(NULL);

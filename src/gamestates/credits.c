@@ -2,6 +2,7 @@
 #include "pd_api.h"
 #include "../pd_helperfuncs.h"
 #include "../commonvars.h"
+#include "../sound.h"
 #include "gamecommon.h"
 #include "credits.h"
 
@@ -12,11 +13,13 @@ void CreditsInit()
 	CreateOtherMenuItems();
 	CreditsNrOfChars = 0;
 	Background = loadImageAtPath("graphics/paper");
+	playTextSound();
 }
 
 void CreditsDeInit()
 {
 	pd->graphics->freeBitmap(Background);
+	stopTextSound();
 }
 
 void Credits()
@@ -34,13 +37,17 @@ void Credits()
 		GameState = GSTitleScreenInit;
 
 	if (CreditsNrOfChars < strlen(Tekst))
+	{
 		CreditsNrOfChars++;
+	}
+	else
+		stopTextSound();
 
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 	pd->graphics->pushContext(NULL);
 	pd->graphics->setFont(Ash);
 	pd->graphics->drawText("CREDITS", strlen("CREDITS"), kASCIIEncoding, WINDOW_WIDTH / 2 - 32, 20);
-	pd->graphics->drawText(Tekst, CreditsNrOfChars,kASCIIEncoding, 30, 40);
+	pd->graphics->drawText(Tekst, CreditsNrOfChars, kASCIIEncoding, 30, 40);
 	pd->graphics->popContext();
 
 	if (GameState != GSCredits)

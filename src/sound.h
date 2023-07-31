@@ -25,6 +25,9 @@ void playBridgeSound(void);
 void playStageEndSound(void);
 void playElfSound(void);
 void playRotateBlockSound(void);
+void playTextSound(void);
+void stopTextSound(void);
+
 void setMusicOn(int value);
 void setSoundOn(int value);
 int isMusicOn(void);
