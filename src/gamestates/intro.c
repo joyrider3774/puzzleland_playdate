@@ -4,8 +4,8 @@
 #include "../commonvars.h"
 #include "intro.h"
 
-LCDBitmap *Pict1,*Pict2,*Pict3,*Pict4,*Pict5;
-int Pictnr,Pictx,Picty;
+LCDBitmap *Pict1,*Pict2,*Pict3,*Pict4,*Pict5, *Pict6;
+int Pictnr,Pictx,Picty, screenDelay = 0;
 
 void IntroInit()
 {
@@ -13,10 +13,14 @@ void IntroInit()
 	Picty = WINDOW_HEIGHT;
 	Pictnr = 1;
 	Pict1 = pd->graphics->copyFrameBufferBitmap();
+	pd->graphics->pushContext(Pict1);
+	pd->graphics->clear(kColorBlack);
+	pd->graphics->popContext();
 	Pict2 = loadImageAtPath("graphics/sdlpowered");
 	Pict3 = loadImageAtPath("graphics/willemssoft");
 	Pict4 = loadImageAtPath("graphics/title");
 	Pict5 = pd->graphics->copyFrameBufferBitmap();
+	Pict6 = pd->graphics->copyFrameBufferBitmap();
 	CreateOtherMenuItems();
 }
 
@@ -27,6 +31,7 @@ void IntroDeInit()
     pd->graphics->freeBitmap(Pict3);
     pd->graphics->freeBitmap(Pict4);
     pd->graphics->freeBitmap(Pict5);
+	pd->graphics->freeBitmap(Pict6);
 }
 
 void Intro()
@@ -36,23 +41,29 @@ void Intro()
 		IntroInit();
 		GameState -= GSInitDiff;
 	}
+
+	if (screenDelay > 0)
+		screenDelay--;
 	
-	Pictx -= 20;
-	if (Picty >0)
+	if (screenDelay == 0)
 	{
-		Picty -= 15;
-	}
-	else
-	{
-		Pictnr++;
-		if (Pictnr == 4)
+		Pictx -= 10;
+		if (Picty > 0)
 		{
-			GameState = GSTitleScreenInit;
+			Picty -= 10;
 		}
 		else
-		//SDL_Delay(2000);
-		Pictx = 320;
-		Picty = 120;
+		{
+			screenDelay = FRAMERATE;
+			Pictnr++;
+			if (Pictnr == 4)
+			{
+				GameState = GSTitleScreenInit;
+			}
+			else
+				Pictx = WINDOW_WIDTH;
+			Picty = WINDOW_HEIGHT;
+		}
 	}
 	
 	if(GameState == GSIntro)
@@ -66,44 +77,29 @@ void Intro()
 
 		switch(Pictnr)
 		{
-			case 1: //SDL_BlitSurface(Pict1,NULL,Screen,NULL);
-					//SDL_BlitSurface(Pict2,NULL,Pict5,NULL);
-					pd->graphics->drawBitmap(Pict1, 0, 0, kBitmapUnflipped);
+			case 1: pd->graphics->drawBitmap(Pict1, 0, 0, kBitmapUnflipped);
 					pd->graphics->pushContext(Pict5);
 					pd->graphics->drawBitmap(Pict2, 0, 0, kBitmapUnflipped);
 					pd->graphics->popContext();
 					break;
-			case 2: //SDL_BlitSurface(Pict2,NULL,Screen,NULL);
-					//SDL_BlitSurface(Pict3,NULL,Pict5,NULL);
-					pd->graphics->drawBitmap(Pict2, 0, 0, kBitmapUnflipped);
+			case 2: pd->graphics->drawBitmap(Pict2, 0, 0, kBitmapUnflipped);
 					pd->graphics->pushContext(Pict5);
 					pd->graphics->drawBitmap(Pict3, 0, 0, kBitmapUnflipped);
 					pd->graphics->popContext();
 					break;
-			case 3: //SDL_BlitSurface(Pict3,NULL,Screen,NULL);
-					//SDL_BlitSurface(Pict4,NULL,Pict5,NULL);
-					pd->graphics->drawBitmap(Pict3, 0, 0, kBitmapUnflipped);
+			case 3: pd->graphics->drawBitmap(Pict3, 0, 0, kBitmapUnflipped);
 					pd->graphics->pushContext(Pict5);
 					pd->graphics->drawBitmap(Pict4, 0, 0, kBitmapUnflipped);
 					pd->graphics->popContext();
 					break;
 
 		}
-		//SDL_Rect aDstRect;
-		//aDstRect.x = (int) 160 - Pictx/2;
-		//aDstRect.y = (int) 120 - Picty/2;
-		//aDstRect.w = Pictx;
-		//aDstRect.h = Picty;
-		//SDL_FillRect(Pict5,&aDstRect,SDL_MapRGB(Pict5->format,255,0,255));
-		//SDL_BlitSurface(Pict5,NULL,Screen,NULL);
-		pd->graphics->pushContext(Pict5);
-		pd->graphics->fillRect((int)160 - Pictx / 2, (int)120 - Picty / 2, Pictx, Picty, kColorClear);
+		pd->graphics->pushContext(Pict6);
+		pd->graphics->clear(kColorWhite);
+		pd->graphics->fillRect((int)160 - Pictx / 2, (int)120 - Picty / 2, Pictx, Picty, kColorBlack);
 		pd->graphics->popContext();
 
-		pd->graphics->clear(kColorWhite);
-		pd->graphics->setBackgroundColor(kColorWhite);
-		pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
-		
+		pd->graphics->setBitmapMask(Pict5, Pict6);
 		pd->graphics->drawBitmap(Pict5, 0, 0, kBitmapUnflipped);
 	}
 
