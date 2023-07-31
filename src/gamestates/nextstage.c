@@ -33,10 +33,10 @@ void NextStageLevel1to35Init()
 
 	StageBlock = CStageBlock_Create();
 	Player = CPlayer_Create(30,167,30,268);
-	Cloud1 = CCloud_Create(259,15,-0.40,Big);
-	Cloud2 = CCloud_Create(185,45,-0.25,Small);
-	Cloud3 = CCloud_Create(134,7,-0.40,Big);
-	Cloud4 = CCloud_Create(50,50,-0.25,Small);
+	Cloud1 = CCloud_Create(259,15,-0.40f,Big);
+	Cloud2 = CCloud_Create(185,45,-0.25f,Small);
+	Cloud3 = CCloud_Create(134,7,-0.40f,Big);
+	Cloud4 = CCloud_Create(50,50,-0.25f,Small);
 	SpaceShip = CSpaceShip_Create();
 	Fairy = CFairy_Create(172,160,3);
 	Background = loadImageAtPath("graphics/betweenstage");
@@ -239,10 +239,10 @@ void NextStageLevel0Init()
 {
 	CreateOtherMenuItems();
 	Player = CPlayer_Create(225,167,225,268);
-	Cloud1 = CCloud_Create(259,15,-0.40,Big);
-	Cloud2 = CCloud_Create(185,45,-0.25,Small);
-	Cloud3 = CCloud_Create(134,7,-0.40,Big);
-	Cloud4 = CCloud_Create(50,50,-0.25,Small);
+	Cloud1 = CCloud_Create(259,15,-0.40f,Big);
+	Cloud2 = CCloud_Create(185,45,-0.25f,Small);
+	Cloud3 = CCloud_Create(134,7,-0.40f,Big);
+	Cloud4 = CCloud_Create(50,50,-0.25f,Small);
 	Background = loadImageAtPath("graphics/betweenstagelevel1");
 	SelectMusic(musStage);
 }

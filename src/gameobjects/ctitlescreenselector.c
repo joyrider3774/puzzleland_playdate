@@ -36,7 +36,7 @@ void CTitleScreenSelector_MoveDown(CTitleScreenSelector* selector)
 
 void CTitleScreenSelector_Draw(CTitleScreenSelector* selector)
 {
-	int y;
+	int y = 0;
 	switch (selector->Selection)
 	{
 		case 1 : y = 66;

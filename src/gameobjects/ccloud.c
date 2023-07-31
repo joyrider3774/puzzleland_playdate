@@ -18,7 +18,7 @@ CCloud* CCloud_Create(const int XIn,const int YIn,float XiIn,CloudStyles Style)
 		Result->Width=30;
 		Result->Height=14;
 	 }
-	Result->X = XIn;
+	Result->X = (float)XIn;
 	Result->Y = YIn;
 	Result->Xi = XiIn;
 	return Result;
@@ -37,7 +37,7 @@ void CCloud_Move(CCloud* Cloud)
 		if (Cloud->X <= -Cloud->Width)
 			Cloud->X = 319;
 		else
-			Cloud->X = -Cloud->Width + 1;
+			Cloud->X = -Cloud->Width + 1.0f;
 }
 
 
