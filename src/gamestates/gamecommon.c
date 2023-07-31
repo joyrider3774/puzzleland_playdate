@@ -3,6 +3,7 @@
 #include <string.h>
 #include "../pd_helperfuncs.h"
 #include "../commonvars.h"
+#include "../sound.h"
 #include "gamecommon.h"
 
 
@@ -11,6 +12,7 @@ void MenuItemCallback(void* userdata)
 	if (userdata == &menuItem1)
 	{
 		GameState = GSTitleScreenInit;
+		stopTextSound();
 	}
 
 	if (userdata == &menuItem2)
