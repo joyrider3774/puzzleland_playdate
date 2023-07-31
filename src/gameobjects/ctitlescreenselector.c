@@ -36,7 +36,6 @@ void CTitleScreenSelector_MoveDown(CTitleScreenSelector* selector)
 
 void CTitleScreenSelector_Draw(CTitleScreenSelector* selector)
 {
-	//SDL_Rect aDstRect;
 	int y;
 	switch (selector->Selection)
 	{
@@ -49,10 +48,6 @@ void CTitleScreenSelector_Draw(CTitleScreenSelector* selector)
 		case 4 : y = 175;
 				 break;
 	}
-	//aDstRect.x = 71;
-	//aDstRect.w = selector->Image->w;
-	//aDstRect.h = selector->Image->h;
-	//SDL_BlitSurface(selector->Image,NULL,Screen,&aDstRect);
 	pd->graphics->drawBitmap(selector->Image, 71, y, kBitmapUnflipped);
 }
 

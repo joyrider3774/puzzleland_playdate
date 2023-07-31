@@ -16,12 +16,6 @@ CPasswordSelector* CPasswordSelector_Create()
 
 void CPasswordSelector_Draw(CPasswordSelector* Selector)
 {
-	/*SDL_Rect aDstRect;
-	aDstRect.x = XOffsetPassword + Selector->X * 35;
-	aDstRect.y = YOffsetPassword + Selector->Y * 35 - (Selector->Image->h >> 2);
-	aDstRect.w = Selector->Image->w;
-	aDstRect.h = Selector->Image->h;
-	SDL_BlitSurface(Selector->Image,NULL,Screen,&aDstRect);*/
 	int h;
 	pd->graphics->getBitmapData(Selector->Image, NULL, &h, NULL, NULL, NULL);
 	pd->graphics->drawBitmap(Selector->Image, XOffsetPassword + 3 + Selector->X * 35, YOffsetPassword + Selector->Y * 35 - (h >> 2), kBitmapUnflipped);

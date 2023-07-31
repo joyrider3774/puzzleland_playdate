@@ -55,7 +55,6 @@ void TitleScreen()
 				break;
 		}
 	}
-	//SDL_BlitSurface(Background,NULL,Screen,NULL);
 	pd->graphics->clear(kColorWhite);
 	pd->graphics->setBackgroundColor(kColorWhite);
 	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);

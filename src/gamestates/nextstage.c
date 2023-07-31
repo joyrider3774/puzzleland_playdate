@@ -80,7 +80,6 @@ void NextStageLevel1to35Init()
 
 void NextStageLevel1to35DeInit()
 {
-	//Mix_HaltMusic();
 	pd->graphics->freeBitmap(PrevLevel);
  	pd->graphics->freeBitmap(NextLevel);
 	pd->graphics->freeBitmap(Text);
@@ -164,7 +163,6 @@ void NextStageLevel1to35()
 		else
 		{
 			pd->graphics->drawBitmap(Bridge,111, 188, kBitmapUnflipped);
-			//SDL_BlitSurface(Bridge, NULL, Screen, &BridgeDstRect);
 		}
 		CPlayer_Move(Player);
 		CPlayer_Draw(Player);

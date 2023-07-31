@@ -34,7 +34,6 @@ void setupGame()
 	//setSoundOn(isSoundOnSaveState());
 	setMusicOn(true);
 	setSoundOn(true);
-	//font = TTF_OpenFont("font.ttf", 25);
 	pd->graphics->setFont(Mini);
 	Hand = CHand_Create();
 	pd->system->getButtonState(&currButtons, NULL, NULL);

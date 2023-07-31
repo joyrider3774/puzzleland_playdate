@@ -18,14 +18,8 @@ CHand* CHand_Create()
 
 void CHand_Draw(CHand* Hand)
 {
-	//SDL_Rect aDstRect;
 	if (!Hand->Hidden)
 	{
-		/*aDstRect.x = MinPlayAreaX + Hand->X * BlockWidth;
-		aDstRect.y = MinPlayAreaY + Hand->Y * BlockHeight;
-		aDstRect.w = Hand->Image->w;
-		aDstRect.h = Hand->Image->h;
-		SDL_BlitSurface(Hand->Image,NULL,Screen,&aDstRect);*/
 		pd->graphics->drawBitmap(Hand->Image, MinPlayAreaX + Hand->X * BlockWidth, MinPlayAreaY + Hand->Y * BlockHeight, kBitmapUnflipped);
 	}
 }

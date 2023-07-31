@@ -52,28 +52,10 @@ void Options()
 	if ((currButtons & kButtonDown) && !(prevButtons & kButtonDown))
 		COptionsSelector_MoveDown(Selector);
 
-	/*SDL_BlitSurface(Background,NULL,Screen,NULL);
-	TTF_SetFontStyle(font,TTF_STYLE_UNDERLINE);
-	SDL_Color Color1 = {0,0,0,0};
-	WriteText(Screen,font,"OPTIONS",7,Screen->w / 2 - 25,20,0,Color1);
-	TTF_SetFontStyle(font,TTF_STYLE_NORMAL);
-	char Msg[20];
-	if(SoundEnabled)
-		strcpy(Msg,"SOUND: ON");
-	else
-		strcpy(Msg,"SOUND: OFF");
-	WriteText(Screen,font,Msg,strlen(Msg),Screen->w / 2 -35,40,0,Color1);
-	if (MusicEnabled)
-		strcpy(Msg,"MUSIC: ON");
-	else
-		strcpy(Msg,"MUSIC: OFF");
-	WriteText(Screen,font,Msg,strlen(Msg),Screen->w / 2 -35,60,0,Color1);*/
-
 	pd->graphics->clear(kColorWhite);
 	pd->graphics->setBackgroundColor(kColorWhite);
 	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	
 
 	pd->graphics->pushContext(NULL);
 	pd->graphics->setFont(Mini2X);

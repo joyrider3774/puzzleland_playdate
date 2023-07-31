@@ -30,14 +30,8 @@ void CStageBlock_Load(CStageBlock* stageBlock, const int BlockNr)
 
 void CStageBlock_Draw(CStageBlock* stageBlock)
 {
-	//SDL_Rect aDstRect;
 	if (!stageBlock->Hidden)
 	{
-		/*aDstRect.x = stageBlock->X;
-		aDstRect.y = stageBlock->Y;
-		aDstRect.w = stageBlock->Width;
-		aDstRect.h = stageBlock->Height;
-		SDL_BlitSurface(stageBlock->Image,NULL,Screen,&aDstRect);*/
 		pd->graphics->drawBitmap(stageBlock->Image, stageBlock->X, stageBlock->Y, kBitmapUnflipped);
 	}
 }

@@ -98,14 +98,12 @@ void DrawPanel()
 void DrawPlayField()
 {
 	int Layers,X,Y;
-	//SDL_Rect aDstRect;
 	for (Layers = 0;Layers <= 1;Layers++)
 		for (X=Cols-1;X>=0;X--)
 			for(Y=Rows-1;Y>=0;Y--)
 			{
 				if (PlayField[Layers][X][Y] > 0)
 				{
-					//pd->graphics->drawBitmap(BlockImages[PlayField[Layers][X][Y] - 1], XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, kBitmapUnflipped);
 					//simple line drawing of same type of blocks, this will form shapes which is way batter than what i had before
 					pd->graphics->drawBitmap(BlockImage, XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, kBitmapUnflipped);
 					if ((X == 0) || ((X > 0) && (PlayField[Layers][X - 1][Y] != PlayField[Layers][X][Y])))
@@ -157,14 +155,10 @@ void LoadImages()
 	{
 		pd->system->formatString(&FileName, "graphics/border%d",teller+1);
 		BorderImages[teller] = loadImageAtPath(FileName);
-		//SDL_SetColorKey(BorderImages[teller],SDL_RLEACCEL | SDL_SRCCOLORKEY,SDL_MapRGB(BorderImages[teller]->format,255,0,255));
 	}
     RoomBackground = loadImageAtPath("graphics/roombackground");
  	StageClearKader = loadImageAtPath("graphics/stageclearkader");
- 	//SDL_SetColorKey(StageClearKader,SDL_SRCCOLORKEY | SDL_RLEACCEL,SDL_MapRGB(StageClearKader->format,255,0,255));
- 	//SDL_SetAlpha(StageClearKader,SDL_SRCALPHA,225);
  	Bridge = loadImageAtPath("graphics/bridge");
- 	//SDL_SetColorKey(Bridge,SDL_SRCCOLORKEY | SDL_RLEACCEL,SDL_MapRGB(Bridge->format,255,0,255));
 }
 
 void UnloadImages()

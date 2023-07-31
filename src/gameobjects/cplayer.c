@@ -29,24 +29,7 @@ CPlayer* CPlayer_Create(const int Xin,const int Yin,const int MinXin, const int 
 
 void CPlayer_Draw(CPlayer* Player)
 {
-	/*SDL_Rect DstRect,SrcRect;
-	DstRect.x = Player->X + 1;
- 	DstRect.y = Player->Y + 26;
- 	DstRect.w = Player->Shadow->w;
- 	DstRect.h = Player->Shadow->h;
- 	SDL_BlitSurface(Player->Shadow,NULL,Screen,&DstRect);*/
-
 	pd->graphics->drawBitmap(Player->Shadow, Player->X + 1, Player->Y + 26, kBitmapUnflipped);
-
- 	/*DstRect.x = Player->X;
- 	DstRect.y = Player->Y;
- 	DstRect.w = Player->Width;
- 	DstRect.h = Player->Height;
- 	SrcRect.x = Player->AnimPhase * Player->Width;
- 	SrcRect.y = 0;
- 	SrcRect.w = Player->Width;
- 	SrcRect.h = Player->Height;
-	SDL_BlitSurface(Player->Image,&SrcRect,Screen,&DstRect);*/
 	DrawBitmapSrcRec(Player->Image, Player->X, Player->Y, Player->AnimPhase * Player->Width, 0, Player->Width, Player->Height, kBitmapUnflipped);
 }
 

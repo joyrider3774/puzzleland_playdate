@@ -525,7 +525,6 @@ void Game()
 	
 	EndTime = pd->system->getSecondsSinceEpoch(NULL);
 	
-	//SDL_BlitSurface(Background,NULL,Screen,NULL);
 	pd->graphics->drawBitmap(Background, 0, 0, kBitmapUnflipped);
 	DrawPanel();
 	DrawPlayField();

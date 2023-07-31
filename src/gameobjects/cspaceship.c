@@ -15,12 +15,6 @@ CSpaceShip* CSpaceShip_Create()
 
 void CSpaceShip_Draw(CSpaceShip* spaceShip)
 {
-	/*SDL_Rect aDstRect;
-	aDstRect.x = spaceShip->X;
-	aDstRect.y = spaceShip->Y;
-	aDstRect.w = spaceShip->Image->w;
-	aDstRect.h = spaceShip->Image->h;
-	SDL_BlitSurface(spaceShip->Image,NULL,Screen,&aDstRect);*/
 	pd->graphics->drawBitmap(spaceShip->Image, spaceShip->X, spaceShip->Y, kBitmapUnflipped);
 }
 
