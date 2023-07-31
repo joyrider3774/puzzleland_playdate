@@ -10,6 +10,7 @@ COptionsSelector* Selector;
 
 void OptionsInit()
 {
+	CreateOtherMenuItems();
 	Selector = COptionsSelector_Create();
 	Background = loadImageAtPath("graphics/paper");
 }

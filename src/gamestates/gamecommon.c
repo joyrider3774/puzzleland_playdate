@@ -6,6 +6,64 @@
 #include "gamecommon.h"
 
 
+void MenuItemCallback(void* userdata)
+{
+	if (userdata == &menuItem1)
+	{
+		GameState = GSTitleScreenInit;
+	}
+
+	if (userdata == &menuItem2)
+	{
+		NeedGameReset = true;
+	}
+}
+
+void DestroyMenuItems()
+{
+	if (menuItem1)
+	{
+		pd->system->removeMenuItem(menuItem1);
+		menuItem1 = NULL;
+	}
+
+	if (menuItem2)
+	{
+		pd->system->removeMenuItem(menuItem2);
+		menuItem2 = NULL;
+	}
+
+	if (menuItem3)
+	{
+		pd->system->removeMenuItem(menuItem3);
+		menuItem3 = NULL;
+	}
+}
+
+void CreateGameMenuItems()
+{
+	DestroyMenuItems();
+	//TitleScreen
+	if (menuItem1 == NULL)
+	{
+		menuItem1 = pd->system->addMenuItem("Title Screen", MenuItemCallback, &menuItem1);
+	}
+
+	if (menuItem2 == NULL)
+	{
+		menuItem2 = pd->system->addMenuItem("Reset Room", MenuItemCallback, &menuItem2);
+	}
+}
+
+void CreateOtherMenuItems()
+{
+	DestroyMenuItems();
+	//TitleScreen
+	if (menuItem1 == NULL)
+	{
+		menuItem1 = pd->system->addMenuItem("Title Screen", MenuItemCallback, &menuItem1);
+	}
+}
 
 int GetLevel(char *Password)
 {

@@ -13,6 +13,7 @@ CPasswordSelector* PasswordSelector;
 
 void PasswordEntryInit()
 {
+	CreateOtherMenuItems();
 	PasswordEntryCoolDown = 0;
 	CharNr = 0;
 	Password[0] = ' ';

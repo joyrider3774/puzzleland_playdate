@@ -1,4 +1,5 @@
 #include <pd_api.h>
+#include "gamecommon.h"
 #include "../pd_helperfuncs.h"
 #include "../commonvars.h"
 #include "intro.h"
@@ -16,8 +17,7 @@ void IntroInit()
 	Pict3 = loadImageAtPath("graphics/willemssoft");
 	Pict4 = loadImageAtPath("graphics/title");
 	Pict5 = pd->graphics->copyFrameBufferBitmap();
-	//SDL_SetColorKey(Pict5,SDL_SRCCOLORKEY | SDL_RLEACCEL,SDL_MapRGB(Pict5->format,255,0,255));
-	//SDL_FillRect(Pict1,NULL,SDL_MapRGB(Pict1->format,0,0,0));
+	CreateOtherMenuItems();
 }
 
 void IntroDeInit()

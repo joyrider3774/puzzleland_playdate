@@ -8,6 +8,7 @@ size_t CreditsNrOfChars;
 
 void CreditsInit()
 {
+	CreateOtherMenuItems();
 	CreditsNrOfChars = 0;
 	Background = loadImageAtPath("graphics/paper");
 }

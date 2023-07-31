@@ -9,6 +9,7 @@ bool KaderVisible;
 
 void StageClearInit()
 {
+	CreateOtherMenuItems();
 	KaderVisible = true;
 }
 
@@ -24,12 +25,6 @@ void StageClear()
 		StageClearInit();
 		GameState -= GSInitDiff;
 	}
-				/*case SDLK_ESCAPE :
-					Mix_HaltChannel(0);
-					Mix_HaltChannel(1);
-					Mix_HaltMusic();
-					GameState = GSTitleScreenInit;
-					break;*/
 	
 	if ((currButtons & kButtonA) && !(prevButtons & kButtonA))
 		GameState = GSOldManSpeakingInit;

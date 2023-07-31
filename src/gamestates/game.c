@@ -391,9 +391,9 @@ bool IsStageClear()
 	return Temp;
 }
 
-    
 void GameInit()
 {
+	CreateGameMenuItems();
 	GameMoveCoolDown = 0;
 	BlockActive = false;
 	LoadLevel();
@@ -429,10 +429,6 @@ void Game()
 	pd->graphics->setBackgroundColor(kColorBlack);
 	pd->graphics->setClipRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-				/*case SDLK_ESCAPE :
-					GameState = GSTitleScreenInit;
-					Mix_HaltMusic();
-					break;*/
 	if ((currButtons & kButtonA) && !(prevButtons & kButtonA))
 	{
 		if (!BlockActive)
@@ -487,15 +483,7 @@ void Game()
 		if (BlockActive)
 			RotateBlock();
 	}
-	/*	case SDLK_r:
-					LoadLevel();
-					BlockActive = false;
-					CHand_SetPosition(Hand,10,8);
-					CHand_Show(Hand);
-					break;
-				default:
-					break;
-	*/
+
 	if (GameMoveCoolDown > 0)
 		GameMoveCoolDown--;
 	if (BlockActive && (GameMoveCoolDown == 0))
@@ -524,6 +512,17 @@ void Game()
 			}
 		}
 	}
+
+	//set by meny callback
+	if (NeedGameReset)
+	{
+		LoadLevel();
+		BlockActive = false;
+		CHand_SetPosition(Hand, 10, 8);
+		CHand_Show(Hand);
+		NeedGameReset = false;
+	}
+	
 	EndTime = pd->system->getSecondsSinceEpoch(NULL);
 	
 	//SDL_BlitSurface(Background,NULL,Screen,NULL);

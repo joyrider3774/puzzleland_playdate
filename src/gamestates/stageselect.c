@@ -4,6 +4,7 @@
 #include "../sound.h"
 #include "../gameobjects/cstageselectselector.h"
 #include "../commonvars.h"
+#include "gamecommon.h"
 #include "stageselect.h"
 
 
@@ -11,6 +12,7 @@ CStageSelectSelector *StageSelectSelector;
 
 void StageSelectInit()
 {
+	CreateOtherMenuItems();
 	StageSelectSelector = CStageSelectSelector_Create();
 	Background = loadImageAtPath("graphics/paper");
 }

@@ -76,6 +76,8 @@ extern CHand* Hand;
 extern unsigned int StartTime,EndTime;
 extern uint32_t OldTime;
 extern int GameMoveCoolDown, PasswordEntryCoolDown;
+extern PDMenuItem* menuItem1, * menuItem2, * menuItem3;
+extern bool NeedGameReset;
 
 //Puzzle Game Stuff
 extern LCDBitmap* BlockImages[BlockCount];

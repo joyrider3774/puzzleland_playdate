@@ -3,12 +3,14 @@
 #include "../sound.h"
 #include "../gameobjects/ctitlescreenselector.h"
 #include "../commonvars.h"
+#include "gamecommon.h"
 #include "titlescreen.h"
 
 CTitleScreenSelector* TitleScreenSelector;
 
 void TitleScreenInit()
 {
+	DestroyMenuItems();
 	TitleScreenSelector = CTitleScreenSelector_Create();
 	Background = loadImageAtPath("graphics/title");
 	SelectMusic(musTitle);

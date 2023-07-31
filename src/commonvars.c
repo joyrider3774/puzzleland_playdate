@@ -34,8 +34,10 @@ LCDFont* Nano, * Mini, * Mini2X;
 int GameState = GSIntroInit;
 int Level;
 CHand* Hand;
+bool NeedGameReset = false;
 unsigned int StartTime,EndTime;
 uint32_t OldTime = 0;
+PDMenuItem* menuItem1 = NULL, * menuItem2 = NULL, * menuItem3 = NULL;
 
 //Puzzle Game Stuff
 LCDBitmap* BlockImages[BlockCount];

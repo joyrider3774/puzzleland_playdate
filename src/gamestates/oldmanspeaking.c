@@ -21,6 +21,7 @@ char List[100][255];
     
 void OldManSpeakingInit()
 {
+	CreateOtherMenuItems();
 	Background = NULL;
 	Fairy = CFairy_Create(240,175,6);
 	switch (Level)

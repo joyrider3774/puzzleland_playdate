@@ -8,6 +8,7 @@
 #include "../gameobjects/cplayer.h"
 #include "../gameobjects/cfairy.h"
 #include "../commonvars.h"
+#include "gamecommon.h"
 #include "nextstage.h"
 	
 CStageBlock *StageBlock;
@@ -25,6 +26,7 @@ int BridgeDrawnWidth = 0;
 
 void NextStageLevel1to35Init()
 {
+	CreateOtherMenuItems();
 	BridgeShown = false;
 	BridgeDrawing = false;
 	BridgeDrawnWidth = 0;
@@ -237,6 +239,7 @@ void NextStageLevel1to35()
 
 void NextStageLevel0Init()
 {
+	CreateOtherMenuItems();
 	Player = CPlayer_Create(225,167,225,268);
 	Cloud1 = CCloud_Create(259,15,-0.40,Big);
 	Cloud2 = CCloud_Create(185,45,-0.25,Small);
