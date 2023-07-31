@@ -16,13 +16,7 @@ CStageSelectSelector* CStageSelectSelector_Create()
 
 void CStageSelectSelector_Draw(CStageSelectSelector* selector)
 {
-	//SDL_Rect aDstRect;
-	//aDstRect.x = XOffsetStageSelect + selector->X * 82 + 52;
-	//aDstRect.y = YOffsetStageSelect + selector->Y * 14 - 6;
-	//aDstRect.w = selector->Image->w;
-	//aDstRect.h = selector->Image->h;
-	//SDL_BlitSurface(selector->Image,NULL,Screen,&aDstRect);
-	pd->graphics->drawBitmap(selector->Image, XOffsetStageSelect + selector->X * 82 + 52, YOffsetStageSelect + selector->Y * 14 - 6, kBitmapUnflipped);
+	pd->graphics->drawBitmap(selector->Image, XOffsetStageSelect + selector->X * 82 + 52, YOffsetStageSelect + selector->Y * 15 - 3, kBitmapUnflipped);
 }
 
 void CStageSelectSelector_MoveDown(CStageSelectSelector* selector)
@@ -59,7 +53,6 @@ void CStageSelectSelector_MoveUp(CStageSelectSelector* selector)
 		selector->Y--;
 		playMenuSound();
 	}
-
 }
 
 int CStageSelectSelector_GetSelection(CStageSelectSelector* selector)
