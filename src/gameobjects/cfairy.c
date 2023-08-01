@@ -11,8 +11,8 @@ CFairy* CFairy_Create(const int XIn, const int YIn,const int AnimDelayIn)
 	Result->Image = loadImageAtPath("graphics/ryf-fairy");
 	Result->X = XIn;
 	Result->Y = YIn;
-	Result->Width = 18;
-	Result->Height = 22;
+	Result->Width = 27;
+	Result->Height = 33;
 	Result->AnimPhase = 0;
 	Result->Delay = 0;
 	Result->Hidden = false;

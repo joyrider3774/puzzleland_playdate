@@ -39,7 +39,7 @@ void NextStageLevel1to35Init()
 	Cloud3 = CCloud_Create(134,7,-0.40f,Big);
 	Cloud4 = CCloud_Create(50,50,-0.25f,Small);
 	SpaceShip = CSpaceShip_Create();
-	Fairy = CFairy_Create(172,160,3);
+	Fairy = CFairy_Create(172,150,6);
 	Background = loadImageAtPath("graphics/betweenstage");
 	SelectMusic(musStage);
 	switch (Level)
