@@ -107,7 +107,10 @@ void DrawPlayField()
 				if (PlayField[Layers][X][Y] > 0)
 				{
 					//simple line drawing of same type of blocks, this will form shapes which is way batter than what i had before
-					pd->graphics->drawBitmap(BlockImage, XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, kBitmapUnflipped);
+					if(Layers == 1)
+						pd->graphics->drawBitmap(BlockActiveImage, XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, kBitmapUnflipped);
+					else
+						pd->graphics->drawBitmap(BlockImage, XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, kBitmapUnflipped);
 					if ((X == 0) || ((X > 0) && (PlayField[Layers][X - 1][Y] != PlayField[Layers][X][Y])))
 					{
 						pd->graphics->drawLine(XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight, XOffsetGame + X * BlockWidth, YOffsetGame + Y * BlockHeight + BlockHeight, 1, kColorBlack);
@@ -153,6 +156,7 @@ void LoadImages()
 	int teller;
 	char* FileName;
 	BlockImage = loadImageAtPath("graphics/blockimage");
+	BlockActiveImage = loadImageAtPath("graphics/blockactiveimage");
 	for (teller=0;teller<BorderCount;teller++)
 	{
 		pd->system->formatString(&FileName, "graphics/border%d",teller+1);
@@ -171,6 +175,7 @@ void UnloadImages()
 		pd->graphics->freeBitmap(BorderImages[teller]);
 	}
 	pd->graphics->freeBitmap(BlockImage);
+	pd->graphics->freeBitmap(BlockActiveImage);
 	pd->graphics->freeBitmap(RoomBackground);
 	pd->graphics->freeBitmap(StageClearKader);
 	pd->graphics->freeBitmap(Bridge);
