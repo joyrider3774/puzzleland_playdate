@@ -216,11 +216,13 @@ void RotateBlock()
  	if(BlockW > BlockH)
  	{
   		NewBlockH = BlockW;
- 		if((MinY + ( NewBlockH / 2) >= Rows) || (MinY - ((NewBlockH -1)/ 2) <0) || (MinX + BlockW / 2 > Cols))
+ 
+		if((MinY + ( NewBlockH / 2) >= Rows) || (MinY - ((NewBlockH -1)/ 2) <0) || (MinX + BlockW / 2 > Cols))
  		{
 			playErrorSound();
  			return;
  		}
+
  		for(X=BlockW-1;X>=0;X--)
  		{
  			for(Y=BlockH-1;Y>=0;Y--)
@@ -229,29 +231,36 @@ void RotateBlock()
  				PlayField[1][X+MinX][Y+MinY] = 0;
  			}
  		}
- 		Tmp1 = (BlockW - 1) / 2;
+ 
+		Tmp1 = (BlockW - 1) / 2;
  		Tmp2 = (NewBlockH-1)/ 2;
+
  		for(X=BlockW-1;X>=0;X--)
  			for(Y=NewBlockH-1;Y>=0;Y--)
  			{
- 				if((MinX + X -  Tmp1 >=0) && (MinX + X - Tmp1 <= Cols-1) &&
- 				   (MinY + Y -  Tmp2 >= 0) && (MinY+Y - Tmp2/ 2 <= Rows-1))
-					PlayField[1][MinX+X - Tmp1][MinY+Y - Tmp2] = Tmp[X][Y];
- 			}
+				if ((MinX + X - Tmp1 >= 0) && (MinX + X - Tmp1 <= Cols - 1) &&
+					(MinY + Y - Tmp2 >= 0) && (MinY + Y - Tmp2 <= Rows - 1))
+				{
+					PlayField[1][MinX + X - Tmp1][MinY + Y - Tmp2] = Tmp[X][Y];
+				}
+			}
  	}
  	if(BlockW < BlockH)
  	{
  		NewBlockW = BlockH;
  		NewBlockH = BlockW;
+
 		if ((BlockW == 2) && (BlockH == 3))
 			Offset = 1;
 		else
 			Offset = 0;
+
 		if((MinX + Offset +  NewBlockW / 2 >= Cols) || (MinX + Offset - (NewBlockW-1)/2 <0) || (MinY + (BlockH) /2 > Rows))
 		{
 			playErrorSound();
  			return;
 		}
+
 		for(X=BlockW-1;X>=0;X--)
 			for(Y=BlockH-1;Y>=0;Y--)
 			{
@@ -264,7 +273,7 @@ void RotateBlock()
 		for(X=NewBlockW-1;X>=0;X--)
 			for(Y=NewBlockH-1;Y>=0;Y--)
 			{
-				if((MinX+X + Offset - Tmp1  >= 0) && (MinX+X +Offset - Tmp1 <= Cols-1) &&
+				if((MinX+X + Offset - Tmp1  >= 0) && (MinX+X + Offset - Tmp1 <= Cols-1) &&
 				   (MinY+Y + Tmp2  >=0) && (MinY+Y + Tmp2 <= Rows-1))
 				   	PlayField[1][MinX+X + Offset - Tmp1][MinY + Y +  Tmp2] = Tmp[X][Y];
 			}
