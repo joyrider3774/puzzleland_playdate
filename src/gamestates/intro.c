@@ -4,7 +4,7 @@
 #include "../commonvars.h"
 #include "intro.h"
 
-LCDBitmap *Pict1,*Pict2,*Pict3,*Pict4,*Pict5, *Pict6;
+LCDBitmap *Pict1,*Pict2,*Pict3,*Pict5, *Pict6;
 int Pictnr,Pictx,Picty, screenDelay = 0;
 
 void IntroInit()
@@ -16,9 +16,8 @@ void IntroInit()
 	pd->graphics->pushContext(Pict1);
 	pd->graphics->clear(kColorBlack);
 	pd->graphics->popContext();
-	Pict2 = loadImageAtPath("graphics/sdlpowered");
-	Pict3 = loadImageAtPath("graphics/willemssoft");
-	Pict4 = loadImageAtPath("graphics/title");
+	Pict2 = loadImageAtPath("graphics/intro");
+	Pict3 = loadImageAtPath("graphics/title");
 	Pict5 = pd->graphics->copyFrameBufferBitmap();
 	Pict6 = pd->graphics->copyFrameBufferBitmap();
 	CreateOtherMenuItems();
@@ -29,7 +28,6 @@ void IntroDeInit()
     pd->graphics->freeBitmap(Pict1);
     pd->graphics->freeBitmap(Pict2);
     pd->graphics->freeBitmap(Pict3);
-    pd->graphics->freeBitmap(Pict4);
     pd->graphics->freeBitmap(Pict5);
 	pd->graphics->freeBitmap(Pict6);
 }
@@ -56,7 +54,7 @@ void Intro()
 		{
 			screenDelay = FRAMERATE;
 			Pictnr++;
-			if (Pictnr == 4)
+			if (Pictnr == 3)
 			{
 				GameState = GSTitleScreenInit;
 			}
@@ -85,11 +83,6 @@ void Intro()
 			case 2: pd->graphics->drawBitmap(Pict2, 0, 0, kBitmapUnflipped);
 					pd->graphics->pushContext(Pict5);
 					pd->graphics->drawBitmap(Pict3, 0, 0, kBitmapUnflipped);
-					pd->graphics->popContext();
-					break;
-			case 3: pd->graphics->drawBitmap(Pict3, 0, 0, kBitmapUnflipped);
-					pd->graphics->pushContext(Pict5);
-					pd->graphics->drawBitmap(Pict4, 0, 0, kBitmapUnflipped);
 					pd->graphics->popContext();
 					break;
 
