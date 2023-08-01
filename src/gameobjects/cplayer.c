@@ -90,7 +90,7 @@ void CPlayer_Move(CPlayer* Player)
 	{
 		if (Player->Delay > 0)
 			Player->Delay--;
-		if (Player->Delay == 0)
+		if (Player->Delay <= 0)
 		{
 			Player->AnimCounter++;
 			Player->Delay = 3;
@@ -101,7 +101,7 @@ void CPlayer_Move(CPlayer* Player)
   	if (Player->State == EnterBuilding)
   	{
   		Player->Delay--;
-  		if(Player->Delay==0)
+  		if(Player->Delay<=0)
   		{
   			Player->AnimCounter++;
   			Player->Y = Player->Y - 1;
