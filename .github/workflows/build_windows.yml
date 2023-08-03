@@ -37,6 +37,18 @@ jobs:
             mingw-w64-${{matrix.env}}-freetype
             mingw-w64-${{matrix.env}}-libwebp
             mingw-w64-${{matrix.env}}-libtiff
+      
+      - name: Grab Music
+        uses: wei/wget@v1
+        with:
+          args: -O music.zip ${{ secrets.music_download }}
+      
+      - name: Extract music
+        run: |
+          unzip music.zip
+          mv music tmp/Source/music
+          rm music.zip
+      
       - name: move things to correct directories
         shell: msys2 {0}
         run: |
@@ -44,6 +56,12 @@ jobs:
           rm -rf ./Source
           mv tmp/Source ./Source
           mv tmp/src ./src/srcgame                
+      
+      - name: enable masks in sourcecode
+        shell: msys2 {0}
+        run: |
+          sed -i 's/pd_api_gfx_disable_masks = false/pd_api_gfx_disable_masks = true/g' ./src/srcstub/gamestub.cpp              
+      
       - name: Build Game
         shell: msys2 {0}
         run: |
