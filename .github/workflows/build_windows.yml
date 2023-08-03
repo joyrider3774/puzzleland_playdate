@@ -25,6 +25,7 @@ jobs:
         with:
           msystem: ${{matrix.sys}}
           install: >-
+            wget
             base-devel
             mingw-w64-${{matrix.env}}-gcc
             mingw-w64-${{matrix.env}}-SDL2             
@@ -39,11 +40,14 @@ jobs:
             mingw-w64-${{matrix.env}}-libtiff
       
       - name: Grab Music
-        uses: wei/wget@v1
-        with:
-          args: -O music.zip ${{ secrets.music_download }}
+        shell: msys2 {0}
+        env: 
+          music_download: ${{ secrets.music_download }}
+        run: |
+          wget -O music.zip $music_download
       
-      - name: Extract music
+      - name: Extract Music
+        shell: msys2 {0}
         run: |
           unzip music.zip
           mv music tmp/Source/music
