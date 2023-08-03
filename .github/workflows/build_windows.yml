@@ -25,6 +25,7 @@ jobs:
         with:
           msystem: ${{matrix.sys}}
           install: >-
+            unzip
             wget
             base-devel
             mingw-w64-${{matrix.env}}-gcc
