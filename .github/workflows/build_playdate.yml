@@ -34,7 +34,7 @@ jobs:
       - name: Extract music
         run: |
           unzip music.zip
-          mv music Source
+          mv music Source/music
           rm music.zip
       
       - name: Grab Playdate SDK
