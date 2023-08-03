@@ -70,7 +70,7 @@ jobs:
       - name: Build Game
         shell: msys2 {0}
         run: |
-          make
+          make "SRC_C_DIR=src/srcgame src/srcgame/gameobjects src/srcgame/gamestates"
       - name: Copy dll libraries
         shell: msys2 {0}
         run: |
