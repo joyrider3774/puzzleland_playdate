@@ -28,6 +28,7 @@ jobs:
             unzip
             wget
             base-devel
+            mingw-w64-${{matrix.env}}-curl
             mingw-w64-${{matrix.env}}-gcc
             mingw-w64-${{matrix.env}}-SDL2             
             mingw-w64-${{matrix.env}}-SDL2_ttf
@@ -45,7 +46,7 @@ jobs:
         env: 
           music_download: ${{ secrets.music_download }}
         run: |
-          wget -O music.zip $music_download
+          curl $music_download --output music.zip 
       
       - name: Extract Music
         shell: msys2 {0}
