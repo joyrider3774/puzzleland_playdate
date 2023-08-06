@@ -39,10 +39,16 @@ void Options()
 	if ((currButtons & kButtonA) && !(prevButtons & kButtonA))
 	{
 		if (COptionsSelector_GetSelection(Selector) == 1)
+		{
 			setSoundOn(!isSoundOn());
+			SaveSettings();
+		}
 	
 		if (COptionsSelector_GetSelection(Selector) == 2)
+		{
 			setMusicOn(!isMusicOn());
+			SaveSettings();
+		}
 
 		playMenuSelectSound();
 	}

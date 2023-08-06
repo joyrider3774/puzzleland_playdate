@@ -290,7 +290,7 @@ void LoadLevel()
 	char buf = '\0';
 	char value[5] = { '\0','\0','\0','\0','\0' };
 	int ret, pos, intval;
-	pd->system->formatString(&FileName,"./levels/level%d.lev",Level);
+	pd->system->formatString(&FileName,"levels/level%d.lev",Level);
 	PFile = pd->file->open(FileName, kFileRead);
 	pd->system->realloc(FileName, 0);
 	if(PFile)

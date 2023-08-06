@@ -184,44 +184,35 @@ void UnloadImages()
 
 void LoadSettings()
 {
- //	FILE *SettingsFile;
- //	int Value=1;
- //	SettingsFile = fopen("./settings.dat","r");
- //	if(SettingsFile)
- //	{
-	//	fscanf(SettingsFile,"SoundOn=%d\n",&Value);
-	//	if (Value > 0)
-	//		SoundEnabled = true;
-	//	else
-	//		SoundEnabled = false;
-	//	fscanf(SettingsFile,"MusicOn=%d\n",&Value);
-	//	if (Value > 0)
-	//		MusicEnabled = true;
-	//	else
-	//		MusicEnabled = false;
-	//	fclose(SettingsFile);
- //	}
- //	else
- //	{
- //		SoundEnabled = true;
-	//	MusicEnabled = true;
-	//}
+	SDFile* SettingsFile;
+	SettingsFile = pd->file->open("settings.dat", kFileReadData);
+	if (SettingsFile)
+	{
+		int tmp;
+		pd->file->read(SettingsFile, &tmp, sizeof(int));
+		setSoundOn(tmp);
+		pd->file->read(SettingsFile, &tmp, sizeof(int));
+		setMusicOn(tmp);
+		pd->file->close(SettingsFile);
+	}
+	else
+	{
+		setSoundOn(true);
+		setMusicOn(true);
+	}
 }
 
 void SaveSettings()
 {
- 	//FILE *SettingsFile;
- 	//SettingsFile = fopen("./settings.dat","w");
- 	//if(SettingsFile)
- 	//{
-		//if(SoundEnabled)
-		//	fprintf(SettingsFile,"SoundOn=%d\n",1);
-		//else
-		//	fprintf(SettingsFile,"SoundOn=%d\n",0);
-		//if (MusicEnabled)
-		//	fprintf(SettingsFile,"MusicOn=%d\n",1);
-		//else
-		//	fprintf(SettingsFile,"MusicOn=%d\n",0);
-		//fclose(SettingsFile);
- 	//}
+	SDFile* SettingsFile;
+	SettingsFile = pd->file->open("settings.dat", kFileWrite);
+	if (SettingsFile)
+	{
+		int tmp = isSoundOn();
+		pd->file->write(SettingsFile, &tmp, sizeof(int));
+		tmp = isMusicOn();
+		pd->file->write(SettingsFile, &tmp, sizeof(int));
+		pd->file->close(SettingsFile);
+	}
 }
+

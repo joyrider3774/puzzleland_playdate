@@ -31,10 +31,7 @@ void setupGame()
 	initMusic();
 	LoadFonts();
 	LoadImages();
-	//setMusicOn(isMusicOnSaveState());
-	//setSoundOn(isSoundOnSaveState());
-	setMusicOn(true);
-	setSoundOn(true);
+	LoadSettings();
 	pd->graphics->setFont(Mini);
 	Hand = CHand_Create();
 }
