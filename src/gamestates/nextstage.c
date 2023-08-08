@@ -104,11 +104,9 @@ void NextStageLevel1to35()
 	
 	if (GameState == GSNextStage)
 	{
-		/*case SDLK_ESCAPE :
-			GameState = GSTitleScreenInit;
-		break;*/
 		if (((currButtons & kButtonA) && !(prevButtons & kButtonA)) ||
-			((currButtons & kButtonB) && !(prevButtons & kButtonB)))
+			((currButtons & kButtonB) && !(prevButtons & kButtonB)) ||
+			((currButtons & kButtonUp) && !(prevButtons & kButtonUp)))
 		{
 			if(CPlayer_GetX(Player) > 265)
 				Player->State = EnterBuilding;
@@ -268,7 +266,8 @@ void NextStageLevel0()
 	}	
 	
 	if (((currButtons & kButtonA) && !(prevButtons & kButtonA)) ||
-		((currButtons & kButtonB) && !(prevButtons & kButtonB)))
+		((currButtons & kButtonB) && !(prevButtons & kButtonB)) || 
+		((currButtons & kButtonUp) && !(prevButtons & kButtonUp)))
 	{
 		if (CPlayer_GetX(Player) > 265)
 			Player->State = EnterBuilding;
