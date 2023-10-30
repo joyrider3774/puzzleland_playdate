@@ -37,3 +37,5 @@ Yann R. Fernandez aka Ryf Made the main character, fairy, shadow and the clouds 
 
 Music by MusMus [https://musmus.main.jp/](https://musmus.main.jp/)
 
+Fonts by [donald hays](https://devforum.play.date/t/some-small-fonts/1356)
+
