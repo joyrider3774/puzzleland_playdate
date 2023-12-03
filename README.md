@@ -1,4 +1,6 @@
 # Puzzle Land Playdate Version
+![DownloadCountTotal](https://img.shields.io/github/downloads/joyrider3774/puzzleland_playdate/total?label=total%20downloads&style=plastic) ![DownloadCountLatest](https://img.shields.io/github/downloads/joyrider3774/puzzleland_playdate/latest/total?style=plastic) ![LatestVersion](https://img.shields.io/github/v/tag/joyrider3774/puzzleland_playdate?label=Latest%20version&style=plastic) ![License](https://img.shields.io/github/license/joyrider3774/puzzleland_playdate?style=plastic)
+
 Puzzle Land is a remake of the gameboy game Daedalian opus also known as puzzle road in japan. The gameplay and levels are the same but the graphics, music sounds have changed. It's a puzzle game with 36 levels. It is a tribute to a game i spend endless hours playing as a child.
 
 ## Playdate Game Features:
