@@ -28,7 +28,7 @@ jobs:
         run: |
           brew update
           brew install --ignore-dependencies portaudio fluid-synth libxmp gettext glib aom libavif
-          brew install --ignore-dependencies SDL2 SDL2_Mixer SDL2_Image SDL2_ttf SDL2_gfx dylibbundler
+          brew install --ignore-dependencies gnu-sed SDL2 SDL2_Mixer SDL2_Image SDL2_ttf SDL2_gfx dylibbundler
       
       - name: Grab Music
         env: 
@@ -50,7 +50,7 @@ jobs:
       
       - name: enable masks in sourcecode
         run: |
-          sed -i 's/pd_api_gfx_disable_masks = true/pd_api_gfx_disable_masks = false/g' ./src/srcstub/gamestub.cpp 
+          gsed -i 's/pd_api_gfx_disable_masks = true/pd_api_gfx_disable_masks = false/g' ./src/srcstub/gamestub.cpp 
 
       - name: Build Game
         env: # Or as an environment variable
