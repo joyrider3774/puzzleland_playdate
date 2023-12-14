@@ -37,7 +37,6 @@ jobs:
           curl $music_download --output music.zip 
       
       - name: Extract Music
-        shell: msys2 {0}
         run: |
           unzip music.zip
           mv music tmp/Source/music
@@ -50,7 +49,6 @@ jobs:
           cp -Rf tmp/Source/. ./Source
       
       - name: enable masks in sourcecode
-        shell: msys2 {0}
         run: |
           sed -i 's/pd_api_gfx_disable_masks = true/pd_api_gfx_disable_masks = false/g' ./src/srcstub/gamestub.cpp 
 
