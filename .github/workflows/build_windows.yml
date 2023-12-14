@@ -56,12 +56,10 @@ jobs:
           rm music.zip
       
       - name: move things to correct directories
-        shell: msys2 {0}
         run: |
           rm -rf ./src/srcgame
-          rm -rf ./Source
-          mv tmp/Source ./Source
-          mv tmp/src ./src/srcgame                
+          mv tmp/src ./src/srcgame
+          cp -Rf tmp/Source/. ./Source                
       
       - name: enable masks in sourcecode
         shell: msys2 {0}
@@ -72,6 +70,7 @@ jobs:
         shell: msys2 {0}
         run: |
           make "SRC_C_DIR=src/srcgame src/srcgame/gameobjects src/srcgame/gamestates"
+
       - name: Copy dll libraries
         shell: msys2 {0}
         run: |
@@ -107,6 +106,7 @@ jobs:
           cp /${{matrix.sys}}/bin/SDL2*.dll Source/
           cp /${{matrix.sys}}/bin/libsharpyuv*.dll Source/
           cp /${{matrix.sys}}/bin/libwinpthread*.dll Source/
+
       - name: Store build
         uses: actions/upload-artifact@v3
         with:
