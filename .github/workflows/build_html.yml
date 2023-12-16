@@ -26,23 +26,25 @@ jobs:
         with:
           path: emsdk
           repository: 'emscripten-core/emsdk'
+      
       - name: Grab Music
         env: 
           music_download: ${{ secrets.music_download }}
         run: |
           curl $music_download --output music.zip 
+
       - name: Extract Music
         run: |
           unzip music.zip
           mv music tmp/Source/music
           rm music.zip
-	  
+
       - name: Setup EMSDK stuff
         run: |
             cd emsdk
             ./emsdk install latest
             ./emsdk activate latest            
-       
+
       - name: move things to correct directories
         run: |
           rm -rf ./src/srcgame
