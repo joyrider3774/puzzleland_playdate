@@ -54,6 +54,8 @@ int CStageBlock_GetHeight(CStageBlock* stageBlock)
 
 void CStageBlock_destroy(CStageBlock* stageBlock)
 {
+	if(!stageBlock)
+		return;
 	if (stageBlock->Image != NULL)
 	{
 		pd->graphics->freeBitmap(stageBlock->Image);

@@ -85,6 +85,7 @@ void NextStageLevel1to35DeInit()
  	pd->graphics->freeBitmap(NextLevel);
 	pd->graphics->freeBitmap(Text);
 	pd->graphics->freeBitmap(Background);
+	CStageBlock_destroy(StageBlock);
 	CSpaceShip_destroy(SpaceShip);
 	CFairy_Destroy(Fairy);
 	CCloud_Destroy(Cloud1);
