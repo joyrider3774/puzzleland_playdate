@@ -161,6 +161,7 @@ void LoadImages()
 	{
 		pd->system->formatString(&FileName, "graphics/border%d",teller+1);
 		BorderImages[teller] = loadImageAtPath(FileName);
+		pd->system->realloc(FileName, 0);
 	}
     RoomBackground = loadImageAtPath("graphics/roombackground");
  	StageClearKader = loadImageAtPath("graphics/stageclearkader");
