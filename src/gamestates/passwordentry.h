@@ -2,5 +2,6 @@
 #define PASSWORDENTRY_H
 
 void PasswordEntry();
+void PassWordEntryDeInit();
 
 #endif

@@ -2,5 +2,6 @@
 #define INTRO_H
 
 void Intro();
+void IntroDeInit();
 
 #endif

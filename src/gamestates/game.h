@@ -16,5 +16,6 @@ void LoadLevel();
 bool IsStageClear();
 void DrawPanel();
 void Game();
+void GameDeInit();
 
 #endif

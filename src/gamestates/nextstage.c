@@ -20,9 +20,9 @@ CCloud* Cloud3;
 CCloud* Cloud4;
 CSpaceShip* SpaceShip;
 
-bool BridgeShown = false;
-bool BridgeDrawing = false;
-int BridgeDrawnWidth = 0;
+bool BridgeShown;
+bool BridgeDrawing;
+int BridgeDrawnWidth;
 
 
 void NextStageLevel1to35Init()
@@ -236,6 +236,9 @@ void NextStageLevel1to35()
 
 void NextStageLevel0Init()
 {
+	BridgeShown = false;
+	BridgeDrawing = false;
+	BridgeDrawnWidth = 0;
 	CreateOtherMenuItems();
 	Player = CPlayer_Create(225,167,225,268);
 	Cloud1 = CCloud_Create(259,15,-0.40f,Big);

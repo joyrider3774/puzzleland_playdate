@@ -24,9 +24,65 @@ void LoadFonts(void)
 	Ash = loadFontAtPath("fonts/Asheville-Sans-14-Bold/Asheville-Sans-14-Bold");
 }
 
+void terminateGame()
+{
+	switch(GameState)
+	{
+		case GSIntro :
+			IntroDeInit();
+			break;
+		case GSTitleScreen :
+			TitleScreenDeInit();
+			break;
+		case GSOldManSpeaking :
+			OldManSpeakingDeInit();
+			break;
+		case GSPasswordEntry :
+			PassWordEntryDeInit();
+			break;
+		case GSCredits :
+			CreditsDeInit();
+			break;
+		case GSOptions :
+			OptionsDeInit();
+			break;
+		case GSGame :
+			GameDeInit();
+			break;
+		case GSStageClear:
+			StageClearDeInit();
+			break;
+		case GSNextStage:
+			if (Level ==0)
+				NextStageLevel0DeInit();
+			else
+				NextStageLevel1to35DeInit();
+			break;
+		case GSStageSelect:
+			StageSelectDeInit();
+			break;
+		default:
+			break;
+	}
+	DestroyMenuItems();
+	deInitSound();
+	deInitMusic();
+	UnloadImages();
+	SaveSettings();
+	CHand_Destroy(Hand);
+}
+
+void resetGlobals()
+{
+	prevLogTime = 0u;
+	GameState = GSIntroInit;
+	NeedGameReset = false;
+	OldTime = 0;
+}
+
 void setupGame()
 {
-	GameState = GSIntroInit;
+	resetGlobals();
 	initSound();
 	initMusic();
 	LoadFonts();

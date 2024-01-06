@@ -2,5 +2,6 @@
 #define OLDMANSPEAKING_H
 
 void OldManSpeaking();
+void OldManSpeakingDeInit();
 
 #endif

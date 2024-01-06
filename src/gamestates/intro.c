@@ -9,6 +9,7 @@ int Pictnr,Pictx,Picty, screenDelay = 0;
 
 void IntroInit()
 {
+	screenDelay = 0;
 	Pictx = WINDOW_WIDTH;
 	Picty = WINDOW_HEIGHT;
 	Pictnr = 1;
@@ -77,11 +78,13 @@ void Intro()
 		{
 			case 1: pd->graphics->drawBitmap(Pict1, 0, 0, kBitmapUnflipped);
 					pd->graphics->pushContext(Pict5);
+					pd->graphics->clear(kColorWhite);
 					pd->graphics->drawBitmap(Pict2, 0, 0, kBitmapUnflipped);
 					pd->graphics->popContext();
 					break;
 			case 2: pd->graphics->drawBitmap(Pict2, 0, 0, kBitmapUnflipped);
 					pd->graphics->pushContext(Pict5);
+					pd->graphics->clear(kColorWhite);
 					pd->graphics->drawBitmap(Pict3, 0, 0, kBitmapUnflipped);
 					pd->graphics->popContext();
 					break;
@@ -91,7 +94,6 @@ void Intro()
 		pd->graphics->clear(kColorWhite);
 		pd->graphics->fillRect((int)160 - Pictx / 2, (int)120 - Picty / 2, Pictx, Picty, kColorBlack);
 		pd->graphics->popContext();
-
 		pd->graphics->setBitmapMask(Pict5, Pict6);
 		pd->graphics->drawBitmap(Pict5, 0, 0, kBitmapUnflipped);
 	}

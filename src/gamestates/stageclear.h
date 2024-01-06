@@ -2,5 +2,6 @@
 #define STAGECLEAR_H
 
 void StageClear();
+void StageClearDeInit();
 
 #endif
