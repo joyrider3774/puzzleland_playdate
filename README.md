@@ -11,6 +11,10 @@ Puzzle Land is a remake of the gameboy game Daedalian opus also known as puzzle 
 ## Playing the Game:
 The aim of the game, is to solve the puzzles in any puzzle room with the pieces you are given by moving the pieces into place such that the predefined shape is completely filled.
 
+## Play version with colored graphics
+The windows, mac, (self build) linux and html (web assembly) versions can switch out the default playdate graphics with colored graphics if you press the F3 button on the keyboard or the X Button on your (xbox) gamepad. 
+The game will restart with the next source folder and remember which source folder you are using the next time you start the game.
+
 ## Controls 
 | Button | Action |
 | ------ | ------ |
@@ -25,6 +29,7 @@ The aim of the game, is to solve the puzzles in any puzzle room with the pieces 
 | X | Confirm in menu. During gameplay select a puzzle piece |
 | C | Back in menu. During gameplay HOLD the key then press up key to rotate the puzzle piece, left key to flip the puzzle piece vertically and right key to flip the puzzle piece horizontally  |
 | F | Switch between fullscreen & windowed mode |
+| F3 | Switch Source Folders (switch between playdate and colored graphics) |
 | F4 | Quit game |
 
 ## Controls Windows (Gamepad)
@@ -33,6 +38,7 @@ The aim of the game, is to solve the puzzles in any puzzle room with the pieces 
 | dpad & joystick | Select menu's, options. During gameplay move the selector hand around. |
 | A Button | Confirm in menu. During gameplay select a puzzle piece |
 | B Button | Back in menu. During gameplay HOLD the button then press Dpad up to rotate the puzzle piece, Dpad left to flip the puzzle piece vertically and Dpad right to flip the puzzle piece horizontally |
+| X Button | Switch Source Folders (switch between playdate and colored graphics) |
 
 ## Credits
 Yann R. Fernandez aka Ryf Made the main character, fairy, shadow and the clouds graphics.
