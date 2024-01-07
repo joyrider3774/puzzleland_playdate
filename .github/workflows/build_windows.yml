@@ -56,6 +56,7 @@ jobs:
           rm music.zip
       
       - name: move things to correct directories
+        shell: msys2 {0}
         run: |
           rm -rf ./src/srcgame
           mv tmp/src ./src/srcgame
