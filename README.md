@@ -15,7 +15,8 @@ The aim of the game, is to solve the puzzles in any puzzle room with the pieces 
 The windows, mac, (self build) linux and html (web assembly) versions can switch out the default playdate graphics with colored graphics if you press the F3 button on the keyboard or the X Button on your (xbox) gamepad. 
 The game will restart with the next source folder and remember which source folder you are using the next time you start the game.
 
-## Controls 
+## Controls
+
 | Button | Action |
 | ------ | ------ |
 | Dpad | Select menu's, options. During gameplay move the selector hand around. |
@@ -23,6 +24,7 @@ The game will restart with the next source folder and remember which source fold
 | B | Back in menu. During gameplay HOLD the button then press Dpad up to rotate the puzzle piece, Dpad left to flip the puzzle piece vertically and Dpad right to flip the puzzle piece horizontally |
 
 ## Controls Windows (keyboard)
+
 | Key | Action |
 | ------ | ------ |
 | Arrow keys | Select menu's, options. During gameplay move the selector hand around. |
@@ -33,6 +35,7 @@ The game will restart with the next source folder and remember which source fold
 | F4 | Quit game |
 
 ## Controls Windows (Gamepad)
+
 | Button | Action |
 | ------ | ------ |
 | dpad & joystick | Select menu's, options. During gameplay move the selector hand around. |
