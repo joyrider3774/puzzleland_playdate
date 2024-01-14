@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=Puzzle Land
+Comment=Puzzle Land is a remake of the gameboy game Daedalian opus also known as puzzle road
+Categories=Game;LogicGame;
+
+Icon=io.github.joyrider3774.puzzleland_playdate
+Exec=puzzleland_playdate
+Terminal=false
