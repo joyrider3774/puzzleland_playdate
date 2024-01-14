@@ -46,10 +46,9 @@ modules:
       - echo "cd /app/game" >> "./puzzleland_playdate"
       - echo "./game -f \"\$@\"" >> "./puzzleland_playdate"
       - chmod +x "./puzzleland_playdate"
-      - echo "Download Music"
-      - curl https://joyrider3774.xyz/puzzleland_music/muzic.zip --output music.zip
+      - echo "Extract Music"
       - unzip music.zip
-      - mv music pd_api/Source/music
+      - mv music Source/music
       - rm music.zip
       - echo "Build Game"
       - make "SRC_C_DIR=src/srcgame src/srcgame/gameobjects src/srcgame/gamestates" "CFLAGS_EXTRA=`pkg-config --cflags SDL2_gfx`" "LDFLAGS_EXTRA=`pkg-config --libs SDL2_gfx`" WINDOWSCALE=2 SCREENRESX=320 SCREENRESY=240
@@ -61,6 +60,10 @@ modules:
       - install -D game/metadata/icons/64x64/io.github.joyrider3774.puzzleland_playdate.png /app/share/icons/hicolor/64x64/apps/io.github.joyrider3774.puzzleland_playdate.png
       - install -D game/metadata/icons/128x128/io.github.joyrider3774.puzzleland_playdate.png /app/share/icons/hicolor/128x128/apps/io.github.joyrider3774.puzzleland_playdate.png
     sources:
+      - type: file
+        url: https://joyrider3774.xyz/puzzleland_music/music.zip
+        sha256: 1ce74acc984febe18b9abbd9f86033dce5288d44e515e31beafbc63af926bb03
+        dest-filename: music.zip
       - type: git
         branch: main
         url: https://github.com/joyrider3774/puzzleland_playdate
