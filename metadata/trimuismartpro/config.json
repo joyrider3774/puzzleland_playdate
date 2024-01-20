@@ -1,0 +1,8 @@
+{
+"package":"io.github.joyrider3774.puzzleland",
+"label":"Puzzle Land",
+"icon":"icon.png",
+"iconsel":"icon.png",
+"launch":"launch.sh",
+"description":"Puzzle Land Playdate Created by Joyrider3774"
+}
