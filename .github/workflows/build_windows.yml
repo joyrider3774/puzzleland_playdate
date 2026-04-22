@@ -9,15 +9,15 @@ jobs:
       matrix:
         include:
           - { sys: mingw64, env: x86_64 }
-          - { sys: mingw32, env: i686 }
+         # - { sys: mingw32, env: i686 }
     runs-on: windows-latest    
     steps:
       - name: Checkout Playdate SDL2 Api Sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           repository: 'joyrider3774/Playdate_Api_SDL2'
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           path: tmp
       - name: Setup Msys
@@ -60,7 +60,7 @@ jobs:
         run: |
           rm -rf ./src/srcgame
           mv tmp/src ./src/srcgame
-          cp -Rf tmp/Source/. ./Source                
+          cp -Rf tmp/Source/. ./Source
       
       - name: enable masks in sourcecode
         shell: msys2 {0}
@@ -70,7 +70,7 @@ jobs:
       - name: Build Game
         shell: msys2 {0}
         run: |
-          make "SRC_C_DIR=src/srcgame src/srcgame/gameobjects src/srcgame/gamestates" WINDOWSCALE=2 SCREENRESX=320 SCREENRESY=240
+          make "SRC_C_DIR=src/srcgame src/srcgame/gameobjects src/srcgame/gamestates" LDUSEX11=0 WINDOWSCALE=2 SCREENRESX=320 SCREENRESY=240
 
       - name: Copy dll libraries
         shell: msys2 {0}
@@ -107,9 +107,19 @@ jobs:
           cp /${{matrix.sys}}/bin/SDL2*.dll Source/
           cp /${{matrix.sys}}/bin/libsharpyuv*.dll Source/
           cp /${{matrix.sys}}/bin/libwinpthread*.dll Source/
-
+          cp /${{matrix.sys}}/bin/libavif-*.dll Source/
+          cp /${{matrix.sys}}/bin/libFLAC.dll Source/
+          cp /${{matrix.sys}}/bin/libvorbisfile-*.dll Source/
+          cp /${{matrix.sys}}/bin/libwavpack-*.dll Source/
+          cp /${{matrix.sys}}/bin/libxmp.dll Source/
+          cp /${{matrix.sys}}/bin/libaom.dll Source/
+          cp /${{matrix.sys}}/bin/libdav1d-*.dll Source/
+          cp /${{matrix.sys}}/bin/librav1*.dll Source/
+          cp /${{matrix.sys}}/bin/libSvtAv1Enc-*.dll Source/
+          cp /${{matrix.sys}}/bin/libyuv.dll Source/
+          cp /${{matrix.sys}}/bin/libvorbis-*.dll Source/
       - name: Store build
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v7
         with:
-          name: PuzzleLand ${{ matrix.env }}
+          name: PuzzleLand Windows ${{ matrix.env }}
           path: Source/
